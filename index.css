@@ -43,17 +43,41 @@ header section {
 #time {
   margin-right: 12px;
 }
+
+#answer-area {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #eaeaea;
+}
 #answer {
   flex-grow: 1;
   flex-shrink: 0;
   height: 48px;
   padding: 4px 24px;
   box-sizing: border-box;
-  border-radius: 4px;
   border: none;
   outline: none;
-  background-color: #eaeaea;
+  background-color: transparent;
   font-size: 14px;
+}
+#answer.speech {
+  color: #aaa;
+}
+#mic {
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+#mic:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 main {

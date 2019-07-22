@@ -819,9 +819,14 @@ class PokeDomManager {
   constructor(pokedata) {
     this.view = document.createDocumentFragment();
     this.answerInput = document.getElementById('answer');
+    this.mic = document.getElementById('mic');
     this.pokes = {};
     this.pokeMap = new Map();
     this.answered = [];
+    this.listener = {
+      speech: e => this.speech(e),
+      speechResult: e => this.speechResult(e)
+    };
 
     pokedata.forEach(d => {
       d.keyword.forEach(k => this.pokeMap.set(k, `id${d.id}`));
@@ -834,6 +839,7 @@ class PokeDomManager {
 
     document.getElementById('pokes').appendChild(this.view);
 
+    this.mic.addEventListener('click', this.listener.speech);
     this.answerInput.addEventListener('keydown', e => (e.key === 'Enter' ? this.answer(this.answerInput.value) : false));
   }
   answer(value) {
@@ -844,6 +850,36 @@ class PokeDomManager {
       this.answered.push(key);
       this.pokes[key].active();
       document.getElementById('progress').textContent = this.answered.length;
+    }
+  }
+  speech() {
+    const speech = new webkitSpeechRecognition();
+    speech.lang = 'ja-JP';
+    speech.interimResults = true;
+    speech.continuous = true;
+
+    speech.addEventListener('result', this.listener.speechResult);
+    speech.addEventListener('error', e => console.log(e));
+    speech.addEventListener('soundstart', e => console.log(e));
+
+    speech.start();
+  }
+  speechResult(e) {
+    const result = e.results[e.resultIndex];
+    const alt = result[0];
+
+    console.log('\n');
+    console.log('RESULT:');
+    console.log(e);
+    console.log(alt.transcript);
+    console.log(result.isFinal);
+
+    if (result.isFinal) {
+      this.answer(alt.transcript);
+      this.answerInput.classList.remove('speech');
+    } else {
+      this.answerInput.value = alt.transcript;
+      this.answerInput.classList.add('speech');
     }
   }
 }
@@ -893,6 +929,13 @@ class Poke {
 const pokeContainer = document.getElementById('pokes');
 
 const init = () => {
+  // if ('serviceWorker' in navigator) {
+  //   navigator.serviceWorker
+  //     .register('/serviceworker.js', { scope: '/POKEMON-IERUKANA/' })
+  //     .then(reg => console.log('ServiceWorker registration successful with scope: ', reg.scope))
+  //     .catch(err => console.log('ServiceWorker registration failed: ', err));
+  // }
+
   new PokeDomManager(pokes);
 
   const p = document.createDocumentFragment();
