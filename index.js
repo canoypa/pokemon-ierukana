@@ -822,6 +822,7 @@ class PokeDomManager {
     this.mic = document.getElementById('mic');
     this.pokes = {};
     this.pokeMap = new Map();
+    this.pokeMapKeys;
     this.answered = [];
     this.listener = {
       speech: e => this.speech(e),
@@ -836,6 +837,7 @@ class PokeDomManager {
 
       this.view.appendChild(poke.view);
     });
+    this.pokeMapKeys = [...this.pokeMap.keys()];
 
     document.getElementById('pokes').appendChild(this.view);
 
@@ -875,7 +877,11 @@ class PokeDomManager {
     console.log(result.isFinal);
 
     if (result.isFinal) {
-      this.answer(alt.transcript);
+      this.pokeMapKeys.forEach(k => {
+        if (alt.transcript.includes(k)) {
+          this.answer(k);
+        }
+      });
       this.answerInput.classList.remove('speech');
     } else {
       this.answerInput.value = alt.transcript;
