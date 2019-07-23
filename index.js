@@ -820,6 +820,7 @@ class PokeDomManager {
     this.view = document.createDocumentFragment();
     this.answerInput = document.getElementById('answer');
     this.mic = document.getElementById('mic');
+
     this.pokes = {};
     this.pokeMap = new Map();
     this.pokeMapKeys;
@@ -839,19 +840,42 @@ class PokeDomManager {
     });
     this.pokeMapKeys = [...this.pokeMap.keys()];
 
+    const p = document.createDocumentFragment();
+    const progress = document.createElement('span');
+    const slash = document.createTextNode('/');
+    const total = document.createElement('span');
+    progress.id = 'progress';
+    total.id = 'total';
+    progress.textContent = '0';
+    total.textContent = pokes.length;
+    p.appendChild(progress);
+    p.appendChild(slash);
+    p.appendChild(total);
+    document.getElementById('p').textContent = '';
+    document.getElementById('p').appendChild(p);
+
     document.getElementById('pokes').appendChild(this.view);
 
-    this.mic.addEventListener('click', this.listener.speech);
-    this.answerInput.addEventListener('keydown', e => (e.key === 'Enter' ? this.answer(this.answerInput.value) : false));
-  }
-  answer(value) {
-    const key = this.pokeMap.get(value);
+    const initAnswered = localStorage.getItem('answered');
+    if (initAnswered) {
+      JSON.parse(initAnswered).forEach(a => this.answer(a));
+    }
 
+    this.mic.addEventListener('click', this.listener.speech);
+    this.answerInput.addEventListener('keydown', e => (e.key === 'Enter' ? this.submit(this.answerInput.value) : false));
+  }
+  submit(word) {
+    const key = this.pokeMap.get(word);
+    if (key) this.answer(key);
+  }
+  answer(key) {
     if (key && !this.answered.includes(key)) {
       this.answerInput.value = '';
       this.answered.push(key);
       this.pokes[key].active();
       document.getElementById('progress').textContent = this.answered.length;
+
+      localStorage.setItem('answered', JSON.stringify(this.answered));
     }
   }
   speech() {
@@ -879,7 +903,7 @@ class PokeDomManager {
     if (result.isFinal) {
       this.pokeMapKeys.forEach(k => {
         if (alt.transcript.includes(k)) {
-          this.answer(k);
+          this.submit(k);
         }
       });
       this.answerInput.classList.remove('speech');
@@ -929,10 +953,15 @@ class Poke {
 
     this.viewItem.imagearea.removeChild(this.viewItem.bone);
     this.viewItem.imagearea.appendChild(this.viewItem.image);
+
+    this.view.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
 
-const pokeContainer = document.getElementById('pokes');
+const setting = () => {
+  // setting
+  localStorage.removeItem('answered');
+};
 
 const init = () => {
   // if ('serviceWorker' in navigator) {
@@ -944,20 +973,7 @@ const init = () => {
 
   new PokeDomManager(pokes);
 
-  const p = document.createDocumentFragment();
-  const progress = document.createElement('span');
-  const slash = document.createTextNode('/');
-  const total = document.createElement('span');
-  progress.id = 'progress';
-  total.id = 'total';
-  progress.textContent = '0';
-  total.textContent = pokes.length;
-
-  p.appendChild(progress);
-  p.appendChild(slash);
-  p.appendChild(total);
-  document.getElementById('p').textContent = '';
-  document.getElementById('p').appendChild(p);
+  document.getElementById('setting').addEventListener('click', setting);
 };
 
 init();
