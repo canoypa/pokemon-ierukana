@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "name": "pokemon-ierukana",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.4",
+    "node-sass": "^4.13.0",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {}
+}
