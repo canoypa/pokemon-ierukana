@@ -26,8 +26,6 @@ body {
 }
 
 header {
-  position: sticky;
-  top: 0;
   display: flex;
   align-items: center;
   padding: 12px 24px;
@@ -54,10 +52,14 @@ main {
 }
 
 footer {
+  position: sticky;
+  bottom: 0;
+
   display: flex;
   align-items: center;
   margin-top: 12px;
   padding: 8px 24px;
+  background-color: white;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -79,7 +81,7 @@ footer {
 #answer {
   flex-grow: 1;
   flex-shrink: 0;
-  width: 0px;
+  width: 0;
   height: 48px;
   padding: 4px 24px;
   box-sizing: border-box;
@@ -92,7 +94,7 @@ footer {
   color: #aaa;
 }
 
-#pokes {
+#poke-list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -130,4 +132,102 @@ footer {
 .poke-name {
   width: 6em;
   font-size: 24px;
+}
+
+.speech-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.speech-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 320px;
+  max-width: calc(100vw - 16px);
+  padding: 48px;
+  border-radius: 4px;
+  background-color: white;
+  user-select: none;
+}
+
+.speech-icon {
+  width: 96px;
+  height: 96px;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background-color: #3f51b5;
+
+  fill: white;
+}
+
+.speech-text {
+  margin-top: 24px;
+  font-size: 24px;
+}
+
+#banner-area {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+}
+.banner {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 4px 24px;
+  height: 56px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #eee;
+  overflow: hidden;
+  animation: bannerShow 4s;
+}
+.banner img {
+  width: 48px;
+  margin-right: 24px;
+}
+
+@keyframes bannerShow {
+  0% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(120%);
+  }
+  20% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(0);
+  }
+  70% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(0);
+  }
+  90% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(120%);
+  }
+  100% {
+    margin-bottom: 0;
+    padding: 0;
+    max-height: 0;
+    transform: translateX(120%);
+  }
 }
