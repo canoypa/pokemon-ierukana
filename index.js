@@ -1072,7 +1072,7 @@ class Poke {
   constructor(poke) {
     this.id = poke.id;
     this.name = poke.name;
-    this.image = `/pokemon-ierukana/assets/images/pokemon/${poke.id}.png`;
+    this.image = `./assets/images/pokemon/${poke.id}.png`;
 
     this.view = document.createElement("div");
     this.viewItem = {
