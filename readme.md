@@ -1,4 +1,4 @@
-# _💪POKEMON IERUKANA💪_
+# _💪Pokémon Ierukana💪_
 
 暇つぶしに作ったポケモンいえるかなチャレンジ
 
