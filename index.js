@@ -976,7 +976,11 @@ class Main {
 
       this.submit(id);
 
-      this.idToGetDom.get(id).view.scrollIntoView({ behavior: "smooth", block: "center" });
+      const target = this.idToGetDom.get(id).view;
+      document.getElementById("app").scrollTo({
+        top: target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
+        behavior: "smooth"
+      });
       this.showBanner(value, `./assets/images/pokemon/${id}.png`);
       this.count();
     }
