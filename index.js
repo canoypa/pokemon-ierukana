@@ -812,6 +812,7 @@ class Main {
     { id: 806, name: "ズガドーン", keyword: ["ズガドーン"] },
     { id: 807, name: "ゼラオラ", keyword: ["ゼラオラ"] },
     { id: 808, name: "メルタン", keyword: ["メルタン"] },
+    { id: 810, name: "サルノリ", keyword: ["サルノリ"] },
     { id: 809, name: "メルメタル", keyword: ["メルメタル"] },
     { id: 811, name: "バチンキー", keyword: ["バチンキー"] },
     { id: 812, name: "ゴリランダー", keyword: ["ゴリランダー"] },
@@ -962,6 +963,8 @@ class Main {
   }
 
   count() {
+    console.log(this.pokedex);
+    
     document.getElementById("progress").textContent = `${this.answered.length}/${this.pokedex.length}`;
   }
 
