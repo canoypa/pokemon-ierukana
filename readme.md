@@ -4,4 +4,4 @@
 
 剣盾 までの 890 匹です
 
-[_Let's IERUKANA!!_](https://canoypa.github.io/pokemon-ierukana/)
+[_Let's Ierukana!!_](https://canoypa.github.io/pokemon-ierukana/)
