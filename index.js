@@ -903,7 +903,9 @@ class Main {
   listener = {
     openSettings: () => this.openSettings(),
     answer: e => (e.key === "Enter" ? this.answer(document.getElementById("answer").value) : false),
-    speech: e => this.speech(e)
+    speech: e => this.speech(e),
+    toggleDareda: () => this.toggleDareda(),
+    clearAnswered: () => this.clearAnswered()
   };
 
   constructor() {
@@ -934,6 +936,7 @@ class Main {
     }
 
     this.count();
+    this.dareda();
 
     document.getElementById("setting").addEventListener("click", this.listener.openSettings);
     document.getElementById("answer").addEventListener("keydown", this.listener.answer);
@@ -941,6 +944,58 @@ class Main {
   }
 
   openSettings() {
+    if (!document.getElementById("config-container")) {
+      const df = document.createElement("div");
+      df.id = "config-container";
+      df.innerHTML = `
+      <div id="config-curtain"></div>
+      <div id="config">
+        <div><button id="dareda-mode">Dareda Mode</button></div>
+        <div><button id="clear-answered">回答履歴を削除</button></div>
+      </div>
+      `;
+
+      document.body.appendChild(df);
+    }
+
+    document.getElementById("dareda-mode").addEventListener("click", this.listener.toggleDareda);
+    document.getElementById("clear-answered").addEventListener("click", this.listener.clearAnswered);
+
+    document.getElementById("config-container").classList.add("active");
+
+    const t = () => document.getElementById("config-container").classList.remove("active");
+    document.getElementById("config-curtain").addEventListener("click", t);
+  }
+
+  toggleDareda() {
+    const dareda = localStorage.getItem("dareda");
+
+    if (!dareda) {
+      localStorage.setItem("dareda", true);
+    } else if (dareda === "true") {
+      localStorage.setItem("dareda", false);
+    } else {
+      localStorage.setItem("dareda", true);
+    }
+
+    this.dareda();
+  }
+
+  dareda() {
+    const dareda = localStorage.getItem("dareda");
+
+    if (dareda === "true") {
+      this.idToGetDom.forEach(poke => {
+        poke.view.classList.add("dareda");
+      });
+    } else if (dareda === "false") {
+      this.idToGetDom.forEach(poke => {
+        poke.view.classList.remove("dareda");
+      });
+    }
+  }
+
+  clearAnswered() {
     localStorage.removeItem("answered");
   }
 
@@ -1020,7 +1075,7 @@ class Main {
     };
 
     const answer = find(firstMatchList, result);
-    if (answer.length) while(answer.length) this.answer(answer.pop());
+    if (answer.length) while (answer.length) this.answer(answer.pop());
   }
 
   listenSpeech() {
@@ -1098,19 +1153,18 @@ class Poke {
     this.viewItem.bone.textContent = "？";
     this.viewItem.no.textContent = `No: ${this.id}`;
     this.viewItem.name.textContent = "？？？？";
+    this.viewItem.image.src = this.image;
 
     this.viewItem.imagearea.appendChild(this.viewItem.bone);
+    this.viewItem.imagearea.appendChild(this.viewItem.image);
     this.viewItem.primary.appendChild(this.viewItem.no);
     this.viewItem.primary.appendChild(this.viewItem.name);
     this.view.appendChild(this.viewItem.imagearea);
     this.view.appendChild(this.viewItem.primary);
   }
   active() {
-    this.viewItem.image.src = this.image;
     this.viewItem.name.textContent = this.name;
-
-    this.viewItem.imagearea.removeChild(this.viewItem.bone);
-    this.viewItem.imagearea.appendChild(this.viewItem.image);
+    this.view.classList.add("active");
   }
 }
 
