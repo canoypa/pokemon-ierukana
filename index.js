@@ -963,8 +963,6 @@ class Main {
   }
 
   count() {
-    console.log(this.pokedex);
-    
     document.getElementById("progress").textContent = `${this.answered.length}/${this.pokedex.length}`;
   }
 
