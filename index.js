@@ -967,8 +967,6 @@ class Main {
   }
 
   answer(value) {
-    console.log(value);
-
     const id = this.nameToId.get(value);
     if (id && !this.answered.includes(id)) {
       document.getElementById("answer").value = "";
@@ -1022,7 +1020,7 @@ class Main {
     };
 
     const answer = find(firstMatchList, result);
-    if (answer.length) this.answer(...answer);
+    if (answer.length) while(answer.length) this.answer(answer.pop());
   }
 
   listenSpeech() {
