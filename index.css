@@ -178,6 +178,7 @@ footer {
   position: fixed;
   top: 12px;
   right: 12px;
+  pointer-events: none;
 }
 .banner {
   display: flex;
