@@ -927,6 +927,16 @@ class Main {
     });
     document.getElementById("poke-list").appendChild(df);
 
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target.querySelector(".poke-img");
+          img.src = img.getAttribute("data-src");
+        }
+      });
+    });
+    this.idToGetDom.forEach(poke => observer.observe(poke.view));
+
     const initAnswered = localStorage.getItem("answered");
     if (initAnswered) {
       JSON.parse(initAnswered).forEach(a => {
@@ -1153,7 +1163,7 @@ class Poke {
     this.viewItem.bone.textContent = "？";
     this.viewItem.no.textContent = `No: ${this.id}`;
     this.viewItem.name.textContent = "？？？？";
-    this.viewItem.image.src = this.image;
+    this.viewItem.image.setAttribute("data-src", this.image);
 
     this.viewItem.imagearea.appendChild(this.viewItem.bone);
     this.viewItem.imagearea.appendChild(this.viewItem.image);
