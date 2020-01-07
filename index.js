@@ -920,7 +920,7 @@ class Main {
     this.pokedex.forEach(poke => {
       const pokeDom = new Poke(poke);
 
-      df.appendChild(pokeDom.view);
+      df.appendChild(pokeDom);
 
       this.idToGetDom.set(poke.id, pokeDom);
       poke.keyword.forEach(key => this.nameToId.set(key, poke.id));
@@ -929,13 +929,10 @@ class Main {
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target.querySelector(".poke-img");
-          img.src = img.getAttribute("data-src");
-        }
+        if (entry.isIntersecting) entry.target.showImage();
       });
     });
-    this.idToGetDom.forEach(poke => observer.observe(poke.view));
+    this.idToGetDom.forEach(poke => observer.observe(poke));
 
     const initAnswered = localStorage.getItem("answered");
     if (initAnswered) {
@@ -996,11 +993,11 @@ class Main {
 
     if (dareda === "true") {
       this.idToGetDom.forEach(poke => {
-        poke.view.classList.add("dareda");
+        poke.classList.add("dareda");
       });
     } else if (dareda === "false") {
       this.idToGetDom.forEach(poke => {
-        poke.view.classList.remove("dareda");
+        poke.classList.remove("dareda");
       });
     }
   }
@@ -1040,7 +1037,7 @@ class Main {
 
       this.submit(id);
 
-      const target = this.idToGetDom.get(id).view;
+      const target = this.idToGetDom.get(id);
       document.getElementById("app").scrollTo({
         top: target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
         behavior: "smooth"
@@ -1136,46 +1133,94 @@ class Main {
   }
 }
 
-class Poke {
+class Poke extends HTMLElement {
+  shadow;
+
+  id;
+  name;
+  image;
+
   constructor(poke) {
+    super();
+
+    this.shadow = this.attachShadow({ mode: "open" });
+    this.shadow.innerHTML = Poke.template();
+
     this.id = poke.id;
     this.name = poke.name;
     this.image = `./assets/images/pokemon/${poke.id}.png`;
 
-    this.view = document.createElement("div");
-    this.viewItem = {
-      imagearea: document.createElement("div"),
-      bone: document.createElement("div"),
-      image: document.createElement("img"),
-      primary: document.createElement("div"),
-      no: document.createElement("p"),
-      name: document.createElement("p")
-    };
-
-    this.view.classList.add("poke");
-    this.viewItem.imagearea.classList.add("poke-imgarea");
-    this.viewItem.bone.classList.add("poke-imgbone");
-    this.viewItem.image.classList.add("poke-img");
-    this.viewItem.primary.classList.add("poke-primary");
-    this.viewItem.no.classList.add("poke-no");
-    this.viewItem.name.classList.add("poke-name");
-
-    this.viewItem.bone.textContent = "？";
-    this.viewItem.no.textContent = `No: ${this.id}`;
-    this.viewItem.name.textContent = "？？？？";
-    this.viewItem.image.setAttribute("data-src", this.image);
-
-    this.viewItem.imagearea.appendChild(this.viewItem.bone);
-    this.viewItem.imagearea.appendChild(this.viewItem.image);
-    this.viewItem.primary.appendChild(this.viewItem.no);
-    this.viewItem.primary.appendChild(this.viewItem.name);
-    this.view.appendChild(this.viewItem.imagearea);
-    this.view.appendChild(this.viewItem.primary);
+    this.shadow.querySelector(".img").setAttribute("data-src", this.image);
   }
+
+  showImage() {
+    const img = this.shadow.querySelector(".img");
+    img.src = img.getAttribute("data-src");
+  }
+
   active() {
-    this.viewItem.name.textContent = this.name;
-    this.view.classList.add("active");
+    this.shadow.querySelector(".name").textContent = this.name;
+    this.classList.add("active");
+  }
+
+  static template() {
+    return `
+    <style>
+    :host {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      user-select: none;
+    }
+    .imgarea {
+      width: 64px;
+      height: 64px;
+      margin-right: 16px;
+    }
+    .imgbone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      font-size: 32px;
+    }
+    :host(.active) .imgbone,
+    :host(.dareda) .imgbone {
+      display: none;
+    }
+    .img {
+      width: 100%;
+      height: 100%;
+    }
+    :host(:not(.active):not(.dareda)) .img {
+      display: none;
+    }
+    :host(.dareda:not(.active)) .img {
+      filter: brightness(0);
+    }
+    .no,
+    .name {
+      margin: 4px 0;
+    }
+    .name {
+      width: 6em;
+      font-size: 24px;
+    }
+    </style>
+    <div class="imgarea">
+      <div class="imgbone">？</div>
+      <img class="img">
+    </div>
+    <div class="primary">
+      <p class="no">No: 1</p>
+      <p class="name">？？？？</p>
+    </div>`;
   }
 }
+
+customElements.define("poke-item", Poke);
 
 new Main();
