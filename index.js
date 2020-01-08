@@ -927,9 +927,12 @@ class Main {
     });
     document.getElementById("poke-list").appendChild(df);
 
-    const observer = new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.showImage();
+        if (entry.isIntersecting) {
+          entry.target.showImage();
+          observer.unobserve(entry.target);
+        }
       });
     });
     this.idToGetDom.forEach(poke => observer.observe(poke));
