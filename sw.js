@@ -1,4 +1,4 @@
-const CACHE_NAME = "pokemon-ierukana/cache@v1.1.9";
+const CACHE_NAME = "pokemon-ierukana/cache@v1.1.10";
 const FILES_TO_CACHE = ["/pokemon-ierukana/", "/pokemon-ierukana/index.html", "/pokemon-ierukana/index.js", "/pokemon-ierukana/index.css"];
 
 self.addEventListener("install", event => {
