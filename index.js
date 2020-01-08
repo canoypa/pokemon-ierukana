@@ -1150,6 +1150,7 @@ class Poke extends HTMLElement {
     this.name = poke.name;
     this.image = `./assets/images/pokemon/${poke.id}.png`;
 
+    this.shadow.querySelector(".no").textContent = `No: ${this.id}`;
     this.shadow.querySelector(".img").setAttribute("data-src", this.image);
   }
 
@@ -1215,7 +1216,7 @@ class Poke extends HTMLElement {
       <img class="img">
     </div>
     <div class="primary">
-      <p class="no">No: 1</p>
+      <p class="no">No: 0</p>
       <p class="name">？？？？</p>
     </div>`;
   }
