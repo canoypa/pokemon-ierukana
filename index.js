@@ -1158,6 +1158,7 @@ class Poke extends HTMLElement {
   showImage() {
     const img = this.shadow.querySelector(".img");
     img.src = img.getAttribute("data-src");
+    img.removeAttribute("data-src");
   }
 
   active() {
