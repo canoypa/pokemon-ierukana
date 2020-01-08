@@ -1152,6 +1152,7 @@ class Poke extends HTMLElement {
 
     this.shadow.querySelector(".no").textContent = `No: ${this.id}`;
     this.shadow.querySelector(".img").setAttribute("data-src", this.image);
+    this.shadow.querySelector(".img").setAttribute("alt", this.name);
   }
 
   showImage() {
