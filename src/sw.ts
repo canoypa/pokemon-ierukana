@@ -1,7 +1,7 @@
 const CACHE_NAME = "pokemon-ierukana/cache@v1.1.11";
 const FILES_TO_CACHE = ["/pokemon-ierukana/", "/pokemon-ierukana/index.html", "/pokemon-ierukana/index.js", "/pokemon-ierukana/index.css"];
 
-self.addEventListener("install", event => {
+self.addEventListener("install", (event: any) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       console.log("Opened cache");
@@ -10,7 +10,7 @@ self.addEventListener("install", event => {
   );
 });
 
-self.addEventListener("fetch", event => {
+self.addEventListener("fetch", (event: any) => {
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) return response;
@@ -30,7 +30,7 @@ self.addEventListener("fetch", event => {
   );
 });
 
-self.addEventListener("activate", event => {
+self.addEventListener("activate", (event: any) => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
