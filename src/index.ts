@@ -1,13 +1,16 @@
-class Main {
-  nameToId = new Map();
-  idToGetDom = new Map();
+import pokedex from "./pokedex";
+import { pokeInfo } from "./pokedex/types";
 
-  answered = [];
+class Main {
+  nameToId: Map<string, number> = new Map();
+  idToGetDom: Map<number, Poke> = new Map();
+
+  answered: number[] = [];
 
   listener = {
     openSettings: () => this.openSettings(),
-    answer: e => (e.key === "Enter" ? this.answer(document.getElementById("answer").value) : false),
-    speech: e => this.speech(e),
+    answer: (event: KeyboardEvent) => this.input(event),
+    speech: () => this.speech(),
     toggleDareda: () => this.toggleDareda(),
     clearAnswered: () => this.clearAnswered()
   };
@@ -20,8 +23,9 @@ class Main {
         .catch(err => console.log("ServiceWorker registration failed: ", err));
     }
 
+    const pokeList = <HTMLDivElement>document.getElementById("poke-list");
     const df = document.createDocumentFragment();
-    this.pokedex.forEach(poke => {
+    pokedex.forEach(poke => {
       const pokeDom = new Poke(poke);
 
       df.appendChild(pokeDom);
@@ -29,13 +33,14 @@ class Main {
       this.idToGetDom.set(poke.id, pokeDom);
       poke.keyword.forEach(key => this.nameToId.set(key, poke.id));
     });
-    document.getElementById("poke-list").appendChild(df);
+    pokeList.appendChild(df);
 
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.showImage();
-          observer.unobserve(entry.target);
+          const target = <Poke>entry.target;
+          target.showImage();
+          observer.unobserve(target);
         }
       });
     });
@@ -43,18 +48,22 @@ class Main {
 
     const initAnswered = localStorage.getItem("answered");
     if (initAnswered) {
-      JSON.parse(initAnswered).forEach(a => {
-        this.submit(a);
-        this.answered.push(a);
+      JSON.parse(initAnswered).forEach((answeredID: number) => {
+        this.submit(answeredID);
+        this.answered.push(answeredID);
       });
     }
 
     this.count();
     this.dareda();
 
-    document.getElementById("setting").addEventListener("click", this.listener.openSettings);
-    document.getElementById("answer").addEventListener("keydown", this.listener.answer);
-    document.getElementById("mic").addEventListener("click", this.listener.speech);
+    const settingsButton = <HTMLButtonElement>document.getElementById("setting");
+    const answerButton = <HTMLButtonElement>document.getElementById("answer");
+    const micButton = <HTMLButtonElement>document.getElementById("mic");
+
+    settingsButton.addEventListener("click", this.listener.openSettings);
+    answerButton.addEventListener("keydown", this.listener.answer);
+    micButton.addEventListener("click", this.listener.speech);
   }
 
   openSettings() {
@@ -72,24 +81,29 @@ class Main {
       document.body.appendChild(df);
     }
 
-    document.getElementById("dareda-mode").addEventListener("click", this.listener.toggleDareda);
-    document.getElementById("clear-answered").addEventListener("click", this.listener.clearAnswered);
+    const daredaModeButton = <HTMLButtonElement>document.getElementById("dareda-mode");
+    const clearAnswered = <HTMLButtonElement>document.getElementById("clear-answered");
+    const configContainer = <HTMLDivElement>document.getElementById("config-container");
+    const scrim = <HTMLDivElement>document.getElementById("config-curtain");
 
-    document.getElementById("config-container").classList.add("active");
+    daredaModeButton.addEventListener("click", this.listener.toggleDareda);
+    clearAnswered.addEventListener("click", this.listener.clearAnswered);
 
-    const t = () => document.getElementById("config-container").classList.remove("active");
-    document.getElementById("config-curtain").addEventListener("click", t);
+    configContainer.classList.add("active");
+
+    const t = () => configContainer.classList.remove("active");
+    scrim.addEventListener("click", t);
   }
 
   toggleDareda() {
     const dareda = localStorage.getItem("dareda");
 
     if (!dareda) {
-      localStorage.setItem("dareda", true);
+      localStorage.setItem("dareda", "true");
     } else if (dareda === "true") {
-      localStorage.setItem("dareda", false);
+      localStorage.setItem("dareda", "false");
     } else {
-      localStorage.setItem("dareda", true);
+      localStorage.setItem("dareda", "true");
     }
 
     this.dareda();
@@ -114,7 +128,7 @@ class Main {
   }
 
   showBanner(t = "Hello World!!", imgUrl = "./assets/images/pokemon/1.png") {
-    const bannerArea = document.getElementById("banner-area");
+    const bannerArea = <HTMLDivElement>document.getElementById("banner-area");
 
     const banner = document.createElement("div");
     banner.classList.add("banner");
@@ -132,30 +146,43 @@ class Main {
   }
 
   count() {
-    document.getElementById("progress").textContent = `${this.answered.length}/${this.pokedex.length}`;
+    const progress = <HTMLSpanElement>document.getElementById("progress");
+    progress.textContent = `${this.answered.length}/${pokedex.length}`;
   }
 
-  answer(value) {
+  input(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      const answer = <HTMLInputElement>document.getElementById("answer");
+      this.answer(answer.value);
+    }
+  }
+
+  answer(value: string) {
     const id = this.nameToId.get(value);
     if (id && !this.answered.includes(id)) {
-      document.getElementById("answer").value = "";
+      const answerInput = <HTMLInputElement>document.getElementById("answer");
+      answerInput.value = "";
       this.answered.push(id);
       localStorage.setItem("answered", JSON.stringify(this.answered));
 
       this.submit(id);
 
       const target = this.idToGetDom.get(id);
-      document.getElementById("app").scrollTo({
-        top: target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
-        behavior: "smooth"
-      });
+      const app = <HTMLDivElement>document.getElementById("app");
+      if (target) {
+        app.scrollTo({
+          top: target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
+          behavior: "smooth"
+        });
+      }
       this.showBanner(value, `./assets/images/pokemon/${id}.png`);
       this.count();
     }
   }
 
-  submit(id) {
-    this.idToGetDom.get(id).active();
+  submit(id: number) {
+    const target = this.idToGetDom.get(id);
+    if (target) target.active();
     // document.getElementById("progress").textContent = this.answered.length;
   }
 
@@ -163,7 +190,7 @@ class Main {
     const result = await this.listenSpeech();
 
     const nameList = [...this.nameToId.keys()];
-    const firstMatchList = [];
+    const firstMatchList: string[] = [];
 
     nameList.forEach(v => {
       if (result.includes(v)) firstMatchList.push(v);
@@ -171,25 +198,30 @@ class Main {
 
     firstMatchList.sort((a, b) => (a.length < b.length ? -1 : 1));
 
-    const find = (m, t) => {
-      const r = [];
+    const find = (matchList: string[], inputString: string) => {
+      const r: string[] = [];
 
-      const p = m.pop();
+      const p = matchList.pop();
 
-      if (t.includes(p)) {
-        t = t.replace(p, "");
+      if (p && inputString.includes(p)) {
+        inputString = inputString.replace(p, "");
         r.push(p);
       }
 
-      if (m.length && t.length) {
-        r.push(...find(m, t));
+      if (matchList.length && inputString.length) {
+        r.push(...find(matchList, inputString));
       }
 
       return r;
     };
 
     const answer = find(firstMatchList, result);
-    if (answer.length) while (answer.length) this.answer(answer.pop());
+    if (answer.length) {
+      while (answer.length) {
+        const pop = answer.pop();
+        if (pop) this.answer(pop);
+      }
+    }
   }
 
   listenSpeech() {
@@ -213,16 +245,17 @@ class Main {
       speech.interimResults = true;
       speech.continuous = true;
 
-      speech.addEventListener("result", e => {
-        const result = e.results[e.resultIndex];
+      speech.addEventListener("result", event => {
+        const result = event.results[event.resultIndex];
         const alt = result[0];
         const text = alt.transcript;
 
-        document.querySelector(".speech-text").textContent = text;
+        const speechText = <HTMLDivElement>document.querySelector(".speech-text");
+        speechText.textContent = text;
 
         console.log("\n");
         console.log("RESULT:");
-        console.log(e);
+        console.log(event);
         console.log(text);
         console.log(result.isFinal);
 
@@ -241,35 +274,39 @@ class Main {
 }
 
 class Poke extends HTMLElement {
-  shadow;
+  shadow: ShadowRoot;
 
-  id;
-  name;
-  image;
+  pokeId: number;
+  pokeName: string;
+  pokeImageUrl: string;
 
-  constructor(poke) {
+  constructor(poke: pokeInfo) {
     super();
 
     this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.innerHTML = Poke.template();
 
-    this.id = poke.id;
-    this.name = poke.name;
-    this.image = `./assets/images/pokemon/${poke.id}.png`;
+    this.pokeId = poke.id;
+    this.pokeName = poke.name;
+    this.pokeImageUrl = `./assets/images/pokemon/${poke.id}.png`;
 
-    this.shadow.querySelector(".no").textContent = `No: ${this.id}`;
-    this.shadow.querySelector(".img").setAttribute("data-src", this.image);
-    this.shadow.querySelector(".img").setAttribute("alt", "");
+    const no = <HTMLParagraphElement>this.shadow.querySelector(".no");
+    const img = <HTMLImageElement>this.shadow.querySelector(".img");
+
+    no.textContent = `No: ${this.pokeId}`;
+    img.setAttribute("data-src", this.pokeImageUrl);
+    img.setAttribute("alt", "");
   }
 
   showImage() {
-    const img = this.shadow.querySelector(".img");
-    img.src = img.getAttribute("data-src");
+    const img = <HTMLImageElement>this.shadow.querySelector(".img");
+    img.src = <string>img.getAttribute("data-src");
     img.removeAttribute("data-src");
   }
 
   active() {
-    this.shadow.querySelector(".name").textContent = this.name;
+    const name = <HTMLParagraphElement>this.shadow.querySelector(".name");
+    name.textContent = this.pokeName;
     this.classList.add("active");
   }
 
