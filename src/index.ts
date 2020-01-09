@@ -1,5 +1,6 @@
 import pokedex from "./pokedex";
 import Poke from "./poke";
+import { webkitSpeechRecognition } from "./type";
 
 class Main {
   nameToId: Map<string, number> = new Map();
@@ -225,7 +226,7 @@ class Main {
   }
 
   listenSpeech() {
-    return new Promise(resolve => {
+    return new Promise<string>(resolve => {
       const df = document.createElement("div");
       df.innerHTML = `
         <div class="speech-container">
@@ -245,7 +246,7 @@ class Main {
       speech.interimResults = true;
       speech.continuous = true;
 
-      speech.addEventListener("result", event => {
+      speech.addEventListener("result", (event: any) => {
         const result = event.results[event.resultIndex];
         const alt = result[0];
         const text = alt.transcript;
