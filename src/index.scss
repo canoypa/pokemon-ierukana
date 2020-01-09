@@ -26,33 +26,39 @@ body {
 }
 
 header {
-  position: sticky;
-  top: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   padding: 12px 24px;
   background-color: #fff;
   font-size: 24px;
   font-weight: bold;
   font-style: italic;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 header section {
+  flex-grow: 1;
   display: flex;
   align-items: center;
-  width: 100%;
   min-height: 48px;
 }
 
-#title {
-  flex-grow: 1;
+header section.end {
+  justify-content: flex-end;
 }
 
-#toolbar {
+main {
+  flex: 1;
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+
   display: flex;
   align-items: center;
   margin-top: 12px;
+  padding: 8px 24px;
+  background-color: white;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 #data {
@@ -73,7 +79,7 @@ header section {
 #answer {
   flex-grow: 1;
   flex-shrink: 0;
-  width: 0px;
+  width: 0;
   height: 48px;
   padding: 4px 24px;
   box-sizing: border-box;
@@ -86,46 +92,149 @@ header section {
   color: #aaa;
 }
 
-main {
-  padding: 24px 0;
-}
-
-#pokes {
+#poke-list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.poke {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  user-select: none;
-}
-.poke-imgarea {
-  width: 64px;
-  height: 64px;
-  margin-right: 16px;
-}
-.poke-imgbone {
+.speech-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.speech-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 320px;
+  max-width: calc(100vw - 16px);
+  padding: 48px;
+  border-radius: 4px;
+  background-color: white;
+  user-select: none;
+}
+
+.speech-icon {
+  width: 96px;
+  height: 96px;
+  padding: 24px;
+  box-sizing: border-box;
   border-radius: 50%;
-  background-color: #e0e0e0;
-  font-size: 32px;
+  background-color: #3f51b5;
+
+  fill: white;
 }
-.poke-img {
-  width: 100%;
-  height: 100%;
-}
-.poke-no,
-.poke-name {
-  margin: 4px 0;
-}
-.poke-name {
-  width: 6em;
+
+.speech-text {
+  margin-top: 24px;
   font-size: 24px;
+}
+
+#banner-area {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  pointer-events: none;
+}
+.banner {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 4px 24px;
+  height: 56px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #eee;
+  overflow: hidden;
+  animation: bannerShow 4s;
+}
+.banner img {
+  width: 48px;
+  margin-right: 24px;
+}
+
+@keyframes bannerShow {
+  0% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(120%);
+  }
+  20% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(0);
+  }
+  70% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(0);
+  }
+  90% {
+    margin-bottom: 12px;
+    padding: 4px 24px;
+    max-height: 56px;
+    transform: translateX(120%);
+  }
+  100% {
+    margin-bottom: 0;
+    padding: 0;
+    max-height: 0;
+    transform: translateX(120%);
+  }
+}
+
+#config-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#config-container.active {
+  display: flex;
+}
+#config-curtain {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+#config {
+  display: flex;
+  align-items: center;
+  padding: 24px;
+  border-radius: 4px;
+  background-color: white;
+}
+#config button {
+  min-width: 64px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+}
+#config button:hover {
+  background-color: #eee;
 }
