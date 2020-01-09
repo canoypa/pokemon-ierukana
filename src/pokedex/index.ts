@@ -1,4 +1,6 @@
-const pokedex = [
+import { PokeDex } from "./types";
+
+const pokedex: PokeDex = [
   { id: 1, name: "フシギダネ", keyword: ["フシギダネ"] },
   { id: 2, name: "フシギソウ", keyword: ["フシギソウ"] },
   { id: 3, name: "フシギバナ", keyword: ["フシギバナ"] },
