@@ -1,4 +1,4 @@
-export default [
+const pokedex = [
   { id: 1, name: "フシギダネ", keyword: ["フシギダネ"] },
   { id: 2, name: "フシギソウ", keyword: ["フシギソウ"] },
   { id: 3, name: "フシギバナ", keyword: ["フシギバナ"] },
@@ -894,3 +894,5 @@ export default [
   { id: 889, name: "ザマゼンタ", keyword: ["ザマゼンタ"] },
   { id: 890, name: "ムゲンダイナ", keyword: ["ムゲンダイナ"] }
 ];
+
+export default pokedex;
