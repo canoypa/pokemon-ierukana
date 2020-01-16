@@ -18,6 +18,8 @@ export default class Poke extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.innerHTML = Poke.template();
 
+    this.classList.add("no-intersecting");
+
     this.imgElm = document.createElement("img");
     this.imgElm.classList.add("img");
     this.imgElm.setAttribute("alt", "");
@@ -33,6 +35,7 @@ export default class Poke extends HTMLElement {
   }
 
   showImage() {
+    this.classList.remove("no-intersecting");
     const imgarea = this.shadow.querySelector(".imgarea") as HTMLDivElement;
     const template = this.shadow.querySelector("template") as HTMLTemplateElement;
     imgarea.replaceChild(this.imgElm, template);
@@ -59,6 +62,9 @@ export default class Poke extends HTMLElement {
       align-items: center;
       padding: 16px;
       user-select: none;
+    }
+    :host(.no-intersecting){
+      visibility: hidden;
     }
     .imgarea {
       width: 64px;
