@@ -86,9 +86,6 @@ export default class Poke extends HTMLElement {
     :host(:not(.active):not(.dareda)) .img {
       display: none;
     }
-    :host(.dareda:not(.active)) .img {
-      filter: brightness(0);
-    }
     .no,
     .name {
       margin: 4px 0;
