@@ -20,5 +20,10 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@material/auto-init": "^4.0.0",
+    "@material/button": "^4.0.0",
+    "@material/dialog": "^4.0.0",
+    "@material/icon-button": "^4.0.0"
+  }
 }

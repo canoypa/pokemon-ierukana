@@ -1,6 +1,9 @@
 import pokedex from "./pokedex";
 import Poke from "./components/poke";
 import { IWindow } from "./type";
+import { MDCRipple } from "@material/ripple";
+import { MDCDialog } from "@material/dialog";
+// import mdcAutoInit from "@material/auto-init";
 
 class Main {
   nameToId: Map<string, number> = new Map();
@@ -23,6 +26,8 @@ class Main {
         .then(reg => console.log("ServiceWorker registration successful with scope: ", reg.scope))
         .catch(err => console.log("ServiceWorker registration failed: ", err));
     }
+
+    // mdcAutoInit();
 
     const pokeList = document.getElementById("poke-list") as HTMLDivElement;
     const df = document.createDocumentFragment();
@@ -68,32 +73,53 @@ class Main {
   }
 
   openSettings() {
-    if (!document.getElementById("config-container")) {
+    if (!document.getElementById("settings")) {
       const df = document.createElement("div");
-      df.id = "config-container";
+      df.id = "settings";
+      df.classList.add("mdc-dialog");
       df.innerHTML = `
-      <div id="config-curtain"></div>
-      <div id="config">
-        <div><button id="dareda-mode">Dareda Mode</button></div>
-        <div><button id="clear-answered">回答履歴を削除</button></div>
+      <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          <h2 class="mdc-dialog__title">Settings</h2>
+          <div class="mdc-dialog__content">
+            <div>
+              <button id="dareda-mode" class="mdc-button">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Dareda Mode</span>
+              </button>
+            </div>
+            <div>
+              <button id="clear-answered" class="mdc-button">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">回答履歴を削除</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      `;
+      <div class="mdc-dialog__scrim"></div>`;
+
+      const buttons = df.querySelectorAll("button");
+      buttons.forEach(button => new MDCRipple(button));
 
       document.body.appendChild(df);
     }
 
+    const dialog = new MDCDialog(document.getElementById("settings") as HTMLDivElement);
+    dialog.open();
+
     const daredaModeButton = document.getElementById("dareda-mode") as HTMLButtonElement;
     const clearAnswered = document.getElementById("clear-answered") as HTMLButtonElement;
-    const configContainer = document.getElementById("config-container") as HTMLDivElement;
-    const scrim = document.getElementById("config-curtain") as HTMLDivElement;
+    // const configContainer = document.getElementById("config-container") as HTMLDivElement;
+    // const scrim = document.getElementById("config-curtain") as HTMLDivElement;
 
     daredaModeButton.addEventListener("click", this.listener.toggleDareda);
     clearAnswered.addEventListener("click", this.listener.clearAnswered);
 
-    configContainer.classList.add("active");
+    // configContainer.classList.add("active");
 
-    const t = () => configContainer.classList.remove("active");
-    scrim.addEventListener("click", t);
+    // const t = () => configContainer.classList.remove("active");
+    // scrim.addEventListener("click", t);
   }
 
   toggleDareda() {
@@ -226,11 +252,14 @@ class Main {
   }
 
   listenSpeech() {
-    return new Promise<string>(resolve => {
+    if (!document.getElementById("speech")) {
       const df = document.createElement("div");
+      df.id = "speech";
+      df.classList.add("mdc-dialog");
       df.innerHTML = `
-        <div class="speech-container">
-          <div class="speech-card">
+      <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          <div class="mdc-dialog__content">
             <div class="speech-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z" />
@@ -239,36 +268,47 @@ class Main {
             <div class="speech-text">...</div>
           </div>
         </div>
-      `;
+      </div>
+      <div class="mdc-dialog__scrim"></div>`;
 
-      const { webkitSpeechRecognition }: IWindow = (window as unknown) as IWindow;
-      const speech = new webkitSpeechRecognition();
-      speech.lang = "ja-JP";
-      speech.interimResults = true;
-      speech.continuous = true;
+      document.body.appendChild(df);
+    }
 
+    const { webkitSpeechRecognition }: IWindow = (window as unknown) as IWindow;
+    const speech = new webkitSpeechRecognition();
+    speech.lang = "ja-JP";
+    speech.interimResults = true;
+    speech.continuous = true;
+
+    const dialog = new MDCDialog(document.getElementById("speech") as HTMLDivElement);
+    dialog.listen("MDCDialog:closed", () => speech.stop());
+    dialog.open();
+
+    speech.addEventListener("end", () => dialog.close());
+
+    const speechText = document.querySelector(".speech-text") as HTMLDivElement;
+    speechText.textContent = "...";
+
+    return new Promise<string>(resolve => {
       speech.addEventListener("result", (event: any) => {
         const result = event.results[event.resultIndex];
         const alt = result[0];
         const text = alt.transcript;
 
-        const speechText = document.querySelector(".speech-text") as HTMLDivElement;
         speechText.textContent = text;
 
-        console.log("\n");
-        console.log("RESULT:");
-        console.log(event);
-        console.log(text);
-        console.log(result.isFinal);
+        console.log("==================================================");
+        console.log("Rrsult Event");
+        console.log("Event: ", event);
+        console.log("Text: ", text);
+        console.log("isFinal: ", result.isFinal);
+        console.log("==================================================");
 
         if (result.isFinal) {
           speech.stop();
-          document.body.removeChild(df);
           resolve(text);
         }
       });
-
-      document.body.appendChild(df);
 
       speech.start();
     });
