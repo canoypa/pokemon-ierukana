@@ -1,4 +1,4 @@
-import { pokeInfo } from "../pokedex/types";
+import { pokeInfo } from "../../pokedex/types";
 
 export default class Poke extends HTMLElement {
   shadow: ShadowRoot;

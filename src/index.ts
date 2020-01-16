@@ -1,5 +1,5 @@
 import pokedex from "./pokedex";
-import Poke from "./poke";
+import Poke from "./components/poke";
 import { webkitSpeechRecognition } from "./type";
 
 class Main {
