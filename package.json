@@ -4,7 +4,8 @@
   "name": "pokemon-ierukana",
   "scripts": {
     "build": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "build:workbox": "node ./scripts/workbox/generatesw.js"
   },
   "devDependencies": {
     "@types/mini-css-extract-plugin": "^0.9.0",
