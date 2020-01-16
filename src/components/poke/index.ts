@@ -27,7 +27,7 @@ export default class Poke extends HTMLElement {
     this.pokeImageUrl = `./assets/images/pokemon/${poke.id}.png`;
     this.pokeImageDaredaUrl = `./assets/images/pokemon/dareda/${poke.id}.png`;
 
-    const no = <HTMLParagraphElement>this.shadow.querySelector(".no");
+    const no = this.shadow.querySelector(".no") as HTMLParagraphElement;
 
     no.textContent = `No: ${this.pokeId}`;
   }
@@ -45,7 +45,7 @@ export default class Poke extends HTMLElement {
 
     this.imgElm.src = this.pokeImageUrl;
 
-    const name = <HTMLParagraphElement>this.shadow.querySelector(".name");
+    const name = this.shadow.querySelector(".name") as HTMLParagraphElement;
     name.textContent = this.pokeName;
 
     this.classList.add("active");

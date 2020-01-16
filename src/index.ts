@@ -24,7 +24,7 @@ class Main {
         .catch(err => console.log("ServiceWorker registration failed: ", err));
     }
 
-    const pokeList = <HTMLDivElement>document.getElementById("poke-list");
+    const pokeList = document.getElementById("poke-list") as HTMLDivElement;
     const df = document.createDocumentFragment();
     pokedex.forEach(poke => {
       const pokeDom = new Poke(poke);
@@ -39,7 +39,7 @@ class Main {
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const target = <Poke>entry.target;
+          const target = entry.target as Poke;
           target.showImage();
           observer.unobserve(target);
         }
@@ -58,9 +58,9 @@ class Main {
     this.count();
     this.dareda();
 
-    const settingsButton = <HTMLButtonElement>document.getElementById("setting");
-    const answerButton = <HTMLButtonElement>document.getElementById("answer");
-    const micButton = <HTMLButtonElement>document.getElementById("mic");
+    const settingsButton = document.getElementById("setting") as HTMLButtonElement;
+    const answerButton = document.getElementById("answer") as HTMLButtonElement;
+    const micButton = document.getElementById("mic") as HTMLButtonElement;
 
     settingsButton.addEventListener("click", this.listener.openSettings);
     answerButton.addEventListener("keydown", this.listener.answer);
@@ -82,10 +82,10 @@ class Main {
       document.body.appendChild(df);
     }
 
-    const daredaModeButton = <HTMLButtonElement>document.getElementById("dareda-mode");
-    const clearAnswered = <HTMLButtonElement>document.getElementById("clear-answered");
-    const configContainer = <HTMLDivElement>document.getElementById("config-container");
-    const scrim = <HTMLDivElement>document.getElementById("config-curtain");
+    const daredaModeButton = document.getElementById("dareda-mode") as HTMLButtonElement;
+    const clearAnswered = document.getElementById("clear-answered") as HTMLButtonElement;
+    const configContainer = document.getElementById("config-container") as HTMLDivElement;
+    const scrim = document.getElementById("config-curtain") as HTMLDivElement;
 
     daredaModeButton.addEventListener("click", this.listener.toggleDareda);
     clearAnswered.addEventListener("click", this.listener.clearAnswered);
@@ -129,7 +129,7 @@ class Main {
   }
 
   showBanner(t = "Hello World!!", imgUrl = "./assets/images/pokemon/1.png") {
-    const bannerArea = <HTMLDivElement>document.getElementById("banner-area");
+    const bannerArea = document.getElementById("banner-area") as HTMLDivElement;
 
     const banner = document.createElement("div");
     banner.classList.add("banner");
@@ -147,13 +147,13 @@ class Main {
   }
 
   count() {
-    const progress = <HTMLSpanElement>document.getElementById("progress");
+    const progress = document.getElementById("progress") as HTMLSpanElement;
     progress.textContent = `${this.answered.length}/${pokedex.length}`;
   }
 
   input(event: KeyboardEvent) {
     if (event.key === "Enter") {
-      const answer = <HTMLInputElement>document.getElementById("answer");
+      const answer = document.getElementById("answer") as HTMLInputElement;
       this.answer(answer.value);
     }
   }
@@ -161,7 +161,7 @@ class Main {
   answer(value: string) {
     const id = this.nameToId.get(value);
     if (id && !this.answered.includes(id)) {
-      const answerInput = <HTMLInputElement>document.getElementById("answer");
+      const answerInput = document.getElementById("answer") as HTMLInputElement;
       answerInput.value = "";
       this.answered.push(id);
       localStorage.setItem("answered", JSON.stringify(this.answered));
@@ -169,7 +169,7 @@ class Main {
       this.submit(id);
 
       const target = this.idToGetDom.get(id);
-      const app = <HTMLDivElement>document.getElementById("app");
+      const app = document.getElementById("app") as HTMLDivElement;
       if (target) {
         app.scrollTo({
           top: target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
@@ -252,7 +252,7 @@ class Main {
         const alt = result[0];
         const text = alt.transcript;
 
-        const speechText = <HTMLDivElement>document.querySelector(".speech-text");
+        const speechText = document.querySelector(".speech-text") as HTMLDivElement;
         speechText.textContent = text;
 
         console.log("\n");
