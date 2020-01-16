@@ -1,1 +1,3 @@
-export class webkitSpeechRecognition extends SpeechRecognition {}
+export interface IWindow extends Window {
+  webkitSpeechRecognition: any;
+}

@@ -1,6 +1,6 @@
 import pokedex from "./pokedex";
 import Poke from "./components/poke";
-import { webkitSpeechRecognition } from "./type";
+import { IWindow } from "./type";
 
 class Main {
   nameToId: Map<string, number> = new Map();
@@ -241,6 +241,7 @@ class Main {
         </div>
       `;
 
+      const { webkitSpeechRecognition }: IWindow = (window as unknown) as IWindow;
       const speech = new webkitSpeechRecognition();
       speech.lang = "ja-JP";
       speech.interimResults = true;
