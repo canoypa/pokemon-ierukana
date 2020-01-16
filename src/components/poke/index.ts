@@ -34,7 +34,7 @@ export default class Poke extends HTMLElement {
     no.textContent = `No: ${this.pokeId}`;
   }
 
-  showImage() {
+  intersect() {
     this.classList.remove("no-intersecting");
     const imgarea = this.shadow.querySelector(".imgarea") as HTMLDivElement;
     const template = this.shadow.querySelector("template") as HTMLTemplateElement;

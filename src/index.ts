@@ -45,7 +45,7 @@ class Main {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const target = entry.target as Poke;
-          target.showImage();
+          target.intersect();
           observer.unobserve(target);
         }
       });
