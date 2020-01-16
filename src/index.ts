@@ -27,7 +27,15 @@ class Main {
         .catch(err => console.log("ServiceWorker registration failed: ", err));
     }
 
+    const settingsButton = document.getElementById("setting") as HTMLButtonElement;
+    const answerButton = document.getElementById("answer") as HTMLButtonElement;
+    const micButton = document.getElementById("mic") as HTMLButtonElement;
+
     // mdcAutoInit();
+    const settingsButtonRipple = new MDCRipple(settingsButton);
+    const micButtonRipple = new MDCRipple(micButton);
+    settingsButtonRipple.unbounded = true;
+    micButtonRipple.unbounded = true;
 
     const pokeList = document.getElementById("poke-list") as HTMLDivElement;
     const df = document.createDocumentFragment();
@@ -62,10 +70,6 @@ class Main {
 
     this.count();
     this.dareda();
-
-    const settingsButton = document.getElementById("setting") as HTMLButtonElement;
-    const answerButton = document.getElementById("answer") as HTMLButtonElement;
-    const micButton = document.getElementById("mic") as HTMLButtonElement;
 
     settingsButton.addEventListener("click", this.listener.openSettings);
     answerButton.addEventListener("keydown", this.listener.answer);
