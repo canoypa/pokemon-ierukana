@@ -183,7 +183,7 @@ class Main {
 
   submit(id: number) {
     const target = this.idToGetDom.get(id);
-    if (target) target.active();
+    if (target) target.answered();
     // document.getElementById("progress").textContent = this.answered.length;
   }
 
