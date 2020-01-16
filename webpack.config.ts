@@ -20,14 +20,25 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sassOptions: {
+                includePaths: ["node_modules"]
+              }
+            }
+          }
+        ]
       }
     ]
   },
 
   plugins: [new MiniCssExtractPlugin({ filename: "index.css" })],
 
-  resolve: { extensions: [".ts"] },
+  resolve: { extensions: [".js", ".ts"] },
 
   devtool: "source-map"
 };
