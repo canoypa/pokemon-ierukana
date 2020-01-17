@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "name": "pokemon-ierukana",
   "scripts": {
-    "build": "webpack",
     "watch": "webpack --watch",
+    "build": "npm run build:webpack & npm run build:workbox",
+    "build:webpack": "webpack",
     "build:workbox": "node ./scripts/workbox/generatesw.js"
   },
   "devDependencies": {
