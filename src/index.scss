@@ -8,6 +8,10 @@ body {
   font-family: Roboto;
 }
 
+.mdc-icon-button__icon {
+  pointer-events: none;
+}
+
 #app {
   display: flex;
   flex-direction: column;

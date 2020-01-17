@@ -62,6 +62,7 @@ export default class Poke extends HTMLElement {
       align-items: center;
       padding: 16px;
       user-select: none;
+      pointer-events: none;
     }
     :host(.no-intersecting){
       visibility: hidden;
