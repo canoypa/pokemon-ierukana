@@ -6,7 +6,7 @@ const config: webpack.Configuration = {
   mode: "production",
 
   output: {
-    path: path.resolve("./build"),
+    path: path.resolve("./docs"),
     filename: "index.js"
   },
 
