@@ -4,6 +4,7 @@ import IconButton from "./components/iconButton";
 import AppHeader from "./components/appHeader";
 import AppFooter from "./components/appFooter";
 import AppMain from "./components/appMain";
+import AppRoot from "./components/appRoot";
 import { IWindow } from "./type";
 import { MDCRipple } from "@material/ripple";
 import { MDCDialog } from "@material/dialog";
@@ -13,6 +14,7 @@ customElements.define("icon-button", IconButton);
 customElements.define("app-header", AppHeader);
 customElements.define("app-footer", AppFooter);
 customElements.define("app-main", AppMain);
+customElements.define("app-root", AppRoot);
 
 class Main {
   nameToId: Map<string, number> = new Map();
