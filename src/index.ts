@@ -5,6 +5,7 @@ import AppHeader from "./components/appHeader";
 import AppFooter from "./components/appFooter";
 import AppMain from "./components/appMain";
 import AppRoot from "./components/appRoot";
+import AnswerArea from "./components/answerArea";
 import { IWindow } from "./type";
 import { MDCRipple } from "@material/ripple";
 import { MDCDialog } from "@material/dialog";
@@ -15,6 +16,7 @@ customElements.define("app-header", AppHeader);
 customElements.define("app-footer", AppFooter);
 customElements.define("app-main", AppMain);
 customElements.define("app-root", AppRoot);
+customElements.define("answer-area", AnswerArea);
 
 class Main {
   nameToId: Map<string, number> = new Map();

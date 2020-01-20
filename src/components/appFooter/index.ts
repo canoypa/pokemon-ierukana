@@ -11,9 +11,6 @@ export default class AppFooter extends HTMLElement {
       <!-- <time id="time">nn</time> -->
       <span id="progress">Loading...</span>
     </div>
-    <div id="answer-area">
-      <input id="answer" type="text" placeholder="解答欄" aria-label="解答欄" />
-      <icon-button id="mic" aria-label="音声入力" icon-name="mic"></icon-button>
-    </div>`;
+    <answer-area></answer-area>`;
   }
 }
