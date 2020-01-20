@@ -15,9 +15,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156432200-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-156432200-1');
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-156432200-1");
     </script>
   </head>
   <body>
@@ -27,9 +29,7 @@
           <span id="title">Pokémon Ierukana</span>
         </section>
         <section class="end">
-          <button id="setting" class="mdc-icon-button" data-mdc-auto-init="MDCRipple" aria-label="設定">
-            <img src="./assets/images/icons/settings.svg" alt="settings" class="mdc-icon-button__icon" />
-          </button>
+          <icon-button id="setting" aria-label="設定" icon-name="settings"></icon-button>
         </section>
       </header>
       <main>
@@ -42,9 +42,7 @@
         </div>
         <div id="answer-area">
           <input id="answer" type="text" placeholder="解答欄" aria-label="解答欄" />
-          <button id="mic" class="mdc-icon-button" data-mdc-auto-init="MDCRipple" aria-label="音声入力">
-            <img src="./assets/images/icons/mic.svg" alt="mic" class="mdc-icon-button__icon" />
-          </button>
+          <icon-button id="mic" aria-label="音声入力" icon-name="mic"></icon-button>
         </div>
       </footer>
       <div id="banner-area"></div>

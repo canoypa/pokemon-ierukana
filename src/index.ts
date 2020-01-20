@@ -1,9 +1,12 @@
 import pokedex from "./pokedex";
 import Poke from "./components/poke";
+import IconButton from "./components/iconButton";
 import { IWindow } from "./type";
 import { MDCRipple } from "@material/ripple";
 import { MDCDialog } from "@material/dialog";
 // import mdcAutoInit from "@material/auto-init";
+
+customElements.define("icon-button", IconButton);
 
 class Main {
   nameToId: Map<string, number> = new Map();
