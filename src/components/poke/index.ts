@@ -3,16 +3,16 @@ import { pokeInfo } from "../../pokedex/types";
 export default class Poke extends HTMLElement {
   shadow: ShadowRoot;
 
-  pokeId: number;
-  pokeName: string;
-  pokeImageUrl: string;
-  pokeImageDaredaUrl: string;
+  pokeId: number = 0;
+  pokeName: string = "";
+  pokeImageUrl: string = "";
+  pokeImageDaredaUrl: string = "";
 
   _answered: boolean = false;
 
   imgElm: HTMLImageElement;
 
-  constructor(poke: pokeInfo) {
+  constructor() {
     super();
 
     this.shadow = this.attachShadow({ mode: "open" });
@@ -23,7 +23,9 @@ export default class Poke extends HTMLElement {
     this.imgElm = document.createElement("img");
     this.imgElm.classList.add("img");
     this.imgElm.setAttribute("alt", "");
+  }
 
+  setPoke(poke: pokeInfo) {
     this.pokeId = poke.id;
     this.pokeName = poke.name;
     this.pokeImageUrl = `./assets/images/pokemon/${poke.id}.png`;
@@ -37,7 +39,9 @@ export default class Poke extends HTMLElement {
   intersect() {
     this.classList.remove("no-intersecting");
     const imgarea = this.shadow.querySelector(".imgarea") as HTMLDivElement;
-    const template = this.shadow.querySelector("template") as HTMLTemplateElement;
+    const template = this.shadow.querySelector(
+      "template"
+    ) as HTMLTemplateElement;
     imgarea.replaceChild(this.imgElm, template);
 
     if (!this._answered) this.imgElm.src = this.pokeImageDaredaUrl;

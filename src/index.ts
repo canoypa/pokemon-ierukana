@@ -52,8 +52,8 @@ class Main {
 
     const pokeList = document.getElementById("poke-list") as HTMLDivElement;
     const df = document.createDocumentFragment();
-    pokedex.forEach(poke => {
-      const pokeDom = new Poke(poke);
+      const pokeDom = new Poke();
+      pokeDom.setPoke(poke);
 
       df.appendChild(pokeDom);
 
