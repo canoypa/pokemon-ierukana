@@ -29,18 +29,27 @@ class Main {
     answer: (event: KeyboardEvent) => this.input(event),
     speech: () => this.speech(),
     toggleDareda: () => this.toggleDareda(),
-    clearAnswered: () => this.clearAnswered()
+    clearAnswered: () => this.clearAnswered(),
   };
 
   constructor() {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("sw.js", { scope: "/pokemon-ierukana/" })
-        .then(reg => console.log("ServiceWorker registration successful with scope: ", reg.scope))
-        .catch(err => console.log("ServiceWorker registration failed: ", err));
+        .then((reg) =>
+          console.log(
+            "ServiceWorker registration successful with scope: ",
+            reg.scope
+          )
+        )
+        .catch((err) =>
+          console.log("ServiceWorker registration failed: ", err)
+        );
     }
 
-    const settingsButton = document.getElementById("setting") as HTMLButtonElement;
+    const settingsButton = document.getElementById(
+      "setting"
+    ) as HTMLButtonElement;
     const answerButton = document.getElementById("answer") as HTMLButtonElement;
     const micButton = document.getElementById("mic") as HTMLButtonElement;
 
@@ -52,18 +61,19 @@ class Main {
 
     const pokeList = document.getElementById("poke-list") as HTMLDivElement;
     const df = document.createDocumentFragment();
+    pokedex.forEach((poke) => {
       const pokeDom = new Poke();
       pokeDom.setPoke(poke);
 
       df.appendChild(pokeDom);
 
       this.idToGetDom.set(poke.id, pokeDom);
-      poke.keyword.forEach(key => this.nameToId.set(key, poke.id));
+      poke.keyword.forEach((key) => this.nameToId.set(key, poke.id));
     });
     pokeList.appendChild(df);
 
     const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const target = entry.target as Poke;
           target.intersect();
@@ -71,7 +81,7 @@ class Main {
         }
       });
     });
-    this.idToGetDom.forEach(poke => observer.observe(poke));
+    this.idToGetDom.forEach((poke) => observer.observe(poke));
 
     const initAnswered = localStorage.getItem("answered");
     if (initAnswered) {
@@ -117,16 +127,22 @@ class Main {
       <div class="mdc-dialog__scrim"></div>`;
 
       const buttons = df.querySelectorAll("button");
-      buttons.forEach(button => new MDCRipple(button));
+      buttons.forEach((button) => new MDCRipple(button));
 
       document.body.appendChild(df);
     }
 
-    const dialog = new MDCDialog(document.getElementById("settings") as HTMLDivElement);
+    const dialog = new MDCDialog(
+      document.getElementById("settings") as HTMLDivElement
+    );
     dialog.open();
 
-    const daredaModeButton = document.getElementById("dareda-mode") as HTMLButtonElement;
-    const clearAnswered = document.getElementById("clear-answered") as HTMLButtonElement;
+    const daredaModeButton = document.getElementById(
+      "dareda-mode"
+    ) as HTMLButtonElement;
+    const clearAnswered = document.getElementById(
+      "clear-answered"
+    ) as HTMLButtonElement;
     // const configContainer = document.getElementById("config-container") as HTMLDivElement;
     // const scrim = document.getElementById("config-curtain") as HTMLDivElement;
 
@@ -157,11 +173,11 @@ class Main {
     const dareda = localStorage.getItem("dareda");
 
     if (dareda === "true") {
-      this.idToGetDom.forEach(poke => {
+      this.idToGetDom.forEach((poke) => {
         poke.classList.add("dareda");
       });
     } else if (dareda === "false") {
-      this.idToGetDom.forEach(poke => {
+      this.idToGetDom.forEach((poke) => {
         poke.classList.remove("dareda");
       });
     }
@@ -215,8 +231,9 @@ class Main {
       const app = document.getElementById("app") as HTMLDivElement;
       if (target) {
         app.scrollTo({
-          top: target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
-          behavior: "smooth"
+          top:
+            target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
+          behavior: "smooth",
         });
       }
       this.showBanner(value, `./assets/images/pokemon/${id}.png`);
@@ -236,7 +253,7 @@ class Main {
     const nameList = [...this.nameToId.keys()];
     const firstMatchList: string[] = [];
 
-    nameList.forEach(v => {
+    nameList.forEach((v) => {
       if (result.includes(v)) firstMatchList.push(v);
     });
 
@@ -297,7 +314,9 @@ class Main {
     speech.interimResults = true;
     speech.continuous = true;
 
-    const dialog = new MDCDialog(document.getElementById("speech") as HTMLDivElement);
+    const dialog = new MDCDialog(
+      document.getElementById("speech") as HTMLDivElement
+    );
     dialog.listen("MDCDialog:closed", () => speech.stop());
     dialog.open();
 
@@ -306,7 +325,7 @@ class Main {
     const speechText = document.querySelector(".speech-text") as HTMLDivElement;
     speechText.textContent = "...";
 
-    return new Promise<string>(resolve => {
+    return new Promise<string>((resolve) => {
       speech.addEventListener("result", (event: any) => {
         const result = event.results[event.resultIndex];
         const alt = result[0];
