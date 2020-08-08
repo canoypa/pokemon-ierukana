@@ -5,7 +5,7 @@ import babel from "rollup-plugin-babel";
 import postcss from "rollup-plugin-postcss";
 
 export default {
-  input: "src/pages/root/index.tsx",
+  input: "src/index.tsx",
 
   output: {
     dir: "dist",
