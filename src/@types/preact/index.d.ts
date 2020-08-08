@@ -1,5 +1,5 @@
 import { FunctionComponent } from "preact";
 
 declare module "preact" {
-  type FC = FunctionComponent;
+  type FC<P = {}> = FunctionComponent<P>;
 }
