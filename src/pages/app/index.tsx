@@ -1,3 +1,11 @@
 import { h, Fragment, FC } from "preact";
 
-export const App: FC = () => <Fragment></Fragment>;
+export const App: FC = () => (
+  <Fragment>
+    <Header />
+    <Main />
+    <Footer />
+
+    <Banner />
+  </Fragment>
+);
