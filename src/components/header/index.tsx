@@ -1,4 +1,6 @@
 import { FC } from "preact";
+import { IconButton } from "../icon-button";
+import { IconSettings } from "../icons";
 
 export const Header: FC = () => (
   <header>
