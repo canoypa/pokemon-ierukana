@@ -9,6 +9,8 @@ import AnswerArea from "./components/answerArea";
 import { MDCRipple } from "@material/ripple";
 import { MDCDialog } from "@material/dialog";
 // import mdcAutoInit from "@material/auto-init";
+import { h, render } from "preact";
+import { App } from "./pages/app/index";
 
 customElements.define("icon-button", IconButton);
 customElements.define("app-header", AppHeader);
@@ -350,4 +352,6 @@ class Main {
   }
 }
 
-new Main();
+Main;
+
+render(<App />, document.body);
