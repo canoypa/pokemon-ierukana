@@ -1,4 +1,4 @@
-import { FC } from "preact";
+import { h, FC } from "preact";
 
 type Props = {
   icon: FC;

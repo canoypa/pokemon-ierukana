@@ -1,23 +1,23 @@
 import pokedex from "./pokedex";
 import Poke from "./components/poke";
-import IconButton from "./components/iconButton";
-import AppHeader from "./components/appHeader";
-import AppFooter from "./components/appFooter";
-import AppMain from "./components/appMain";
-import AppRoot from "./components/appRoot";
-import AnswerArea from "./components/answerArea";
+// import IconButton from "./components/iconButton";
+// import AppHeader from "./components/appHeader";
+// import AppFooter from "./components/appFooter";
+// import AppMain from "./components/appMain";
+// import AppRoot from "./components/appRoot";
+// import AnswerArea from "./components/answerArea";
 import { MDCRipple } from "@material/ripple";
 import { MDCDialog } from "@material/dialog";
 // import mdcAutoInit from "@material/auto-init";
 import { h, render } from "preact";
 import { App } from "./pages/app/index";
 
-customElements.define("icon-button", IconButton);
-customElements.define("app-header", AppHeader);
-customElements.define("app-footer", AppFooter);
-customElements.define("app-main", AppMain);
-customElements.define("app-root", AppRoot);
-customElements.define("answer-area", AnswerArea);
+// customElements.define("icon-button", IconButton);
+// customElements.define("app-header", AppHeader);
+// customElements.define("app-footer", AppFooter);
+// customElements.define("app-main", AppMain);
+// customElements.define("app-root", AppRoot);
+// customElements.define("answer-area", AnswerArea);
 
 class Main {
   nameToId: Map<string, number> = new Map();

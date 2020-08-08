@@ -1,4 +1,4 @@
-import { FC } from "preact";
+import { h, FC } from "preact";
 import { IconButton } from "../icon-button";
 import { IconMic } from "../icons";
 
