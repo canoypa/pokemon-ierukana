@@ -6,7 +6,6 @@ import AppFooter from "./components/appFooter";
 import AppMain from "./components/appMain";
 import AppRoot from "./components/appRoot";
 import AnswerArea from "./components/answerArea";
-import { IWindow } from "./type";
 import { MDCRipple } from "@material/ripple";
 import { MDCDialog } from "@material/dialog";
 // import mdcAutoInit from "@material/auto-init";
@@ -308,7 +307,7 @@ class Main {
       document.body.appendChild(df);
     }
 
-    const { webkitSpeechRecognition }: IWindow = (window as unknown) as IWindow;
+    const { webkitSpeechRecognition } = window;
     const speech = new webkitSpeechRecognition();
     speech.lang = "ja-JP";
     speech.interimResults = true;
