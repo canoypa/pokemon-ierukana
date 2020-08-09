@@ -1,9 +1,9 @@
-import { h, FC } from "preact";
+import { h, FC, JSX } from "preact";
 import styles from "./styles.scss";
 
 type Props = {
   icon: FC;
-};
+} & JSX.HTMLAttributes<HTMLButtonElement>;
 export const IconButton: FC<Props> = ({ icon: Icon }) => (
   <button className={styles.iconButton}>
     <Icon />
