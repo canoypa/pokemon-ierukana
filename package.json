@@ -28,6 +28,7 @@
     "preact": "^10.4.7",
     "rollup": "^2.23.1",
     "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-postcss": "^3.1.4",
     "rollup-plugin-typescript2": "^0.27.2",
     "sass-loader": "^8.0.2",
