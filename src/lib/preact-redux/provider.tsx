@@ -3,7 +3,7 @@ import { Store } from "redux";
 import { StoreContext } from "./store";
 
 type Props = {
-  store: Store;
+  store: Store<unknown, any>;
 };
 export const Provider: FC<Props> = ({ store, children }) => {
   return (
