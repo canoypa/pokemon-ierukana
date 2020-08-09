@@ -1,5 +1,5 @@
 import { useContext } from "preact/hooks";
-import { StoreContext } from "./provider";
+import { StoreContext } from "./store";
 import { Store } from "redux";
 
 export const useSelector = (selector: (store: Store) => unknown) => {
