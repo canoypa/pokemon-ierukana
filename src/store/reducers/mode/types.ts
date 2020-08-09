@@ -6,5 +6,7 @@ export const GameMode = {
 } as const;
 export type GameMode = keyof typeof GameMode;
 
+export type SetGameModeAction = Action<"SetGameModeAction", GameMode>;
+
 export type State = GameMode;
-export type Actions = Action<"SetGameModeAction", GameMode>;
+export type Actions = SetGameModeAction;
