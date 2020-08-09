@@ -1,4 +1,4 @@
 import { createContext } from "preact";
-import { Store } from "redux";
+import { Store } from "../../store/types";
 
-export const StoreContext = createContext<Store<any, any> | null>(null);
+export const StoreContext = createContext<Store | null>(null);

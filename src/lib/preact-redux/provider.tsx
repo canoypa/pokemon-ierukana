@@ -1,9 +1,9 @@
 import { h, FC } from "preact";
-import { Store } from "redux";
 import { StoreContext } from "./store";
+import { Store } from "../../store/types";
 
 type Props = {
-  store: Store<unknown, any>;
+  store: Store;
 };
 export const Provider: FC<Props> = ({ store, children }) => {
   return (

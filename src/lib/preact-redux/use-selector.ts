@@ -1,8 +1,8 @@
 import { useContext } from "preact/hooks";
 import { StoreContext } from "./store";
-import { Store } from "redux";
+import { Stores } from "../../store/types";
 
-export const useSelector = (selector: (store: Store) => unknown) => {
+export const useSelector = <S>(selector: (store: Stores) => S) => {
   const store = useContext(StoreContext);
   if (!store) throw new Error("Store not found.");
 
