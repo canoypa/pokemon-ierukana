@@ -10,3 +10,5 @@ export const mode: Reducer<State, Actions> = (state, action) => {
 
   return state;
 };
+
+export * from "./types";

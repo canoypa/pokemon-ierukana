@@ -10,3 +10,5 @@ export const isSettingsOpen: Reducer<State, Actions> = (state, action) => {
 
   return state;
 };
+
+export * from "./types";
