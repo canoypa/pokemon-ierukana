@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "name": "pokemon-ierukana",
   "scripts": {
-    "watch": "webpack --watch",
+    "watch": "rollup -c -w",
     "start": "http-server ./docs -c-1 -g",
-    "build": "npm run build:webpack & npm run build:workbox",
-    "build:webpack": "webpack",
+    "build": "npm run build:rollup & npm run build:workbox",
+    "build:rollup": "rollup -c",
     "build:workbox": "node ./scripts/workbox/generatesw.js"
   },
   "devDependencies": {
