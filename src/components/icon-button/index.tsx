@@ -4,8 +4,8 @@ import styles from "./styles.scss";
 type Props = {
   icon: FC;
 } & JSX.HTMLAttributes<HTMLButtonElement>;
-export const IconButton: FC<Props> = ({ icon: Icon }) => (
-  <button className={styles.iconButton}>
+export const IconButton: FC<Props> = ({ icon: Icon, ...attr }) => (
+  <button className={styles.iconButton} {...attr}>
     <Icon />
   </button>
 );
