@@ -5,7 +5,7 @@ export const store = createStore(reducers);
 
 export const dispatch = store.dispatch;
 
-// Dev
+// Debug
 store.subscribe(() => {
-  console.log("new store: ", store.getState());
+  console.log("New Store:\n", store.getState());
 });
