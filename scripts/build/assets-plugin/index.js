@@ -24,7 +24,11 @@ const copyDir = (src, dest) => {
 
 export default function assetsPlugin() {
   copyDir(resolve("./src/assets"), resolve("./docs/assets"));
-  copyFile(resolve("./src/manifest.json"), resolve("./docs/manifest.json"));
+  copyFile(
+    resolve("./src/manifest.json"),
+    resolve("./docs/manifest.json"),
+    () => {}
+  );
 
   return {
     name: "assets-plugin",
