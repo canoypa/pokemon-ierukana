@@ -4,7 +4,7 @@ import { classNames } from "../../utils/class-names";
 
 type Props = {
   icon: FC;
-} & JSX.HTMLAttributes<HTMLButtonElement>;
+} & Omit<JSX.HTMLAttributes<HTMLButtonElement>, "icon">;
 export const IconButton: FC<Props> = ({ icon: Icon, className, ...attr }) => (
   <button className={classNames(styles.iconButton, className)} {...attr}>
     <Icon />
