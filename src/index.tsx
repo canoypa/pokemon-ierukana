@@ -1,4 +1,4 @@
-import pokedex from "./pokedex";
+import { pokedex } from "./pokedex";
 import Poke from "./components/poke";
 // import IconButton from "./components/iconButton";
 // import AppHeader from "./components/appHeader";
