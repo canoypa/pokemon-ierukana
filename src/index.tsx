@@ -6,8 +6,8 @@ import Poke from "./components/poke";
 // import AppMain from "./components/appMain";
 // import AppRoot from "./components/appRoot";
 // import AnswerArea from "./components/answerArea";
-import { MDCRipple } from "@material/ripple";
-import { MDCDialog } from "@material/dialog";
+// import { MDCRipple } from "@material/ripple";
+// import { MDCDialog } from "@material/dialog";
 // import mdcAutoInit from "@material/auto-init";
 import { h, render } from "preact";
 import { App } from "./pages/app/index";
@@ -55,10 +55,10 @@ class Main {
     const micButton = document.getElementById("mic") as HTMLButtonElement;
 
     // mdcAutoInit();
-    const settingsButtonRipple = new MDCRipple(settingsButton);
-    const micButtonRipple = new MDCRipple(micButton);
-    settingsButtonRipple.unbounded = true;
-    micButtonRipple.unbounded = true;
+    // const settingsButtonRipple = new MDCRipple(settingsButton);
+    // const micButtonRipple = new MDCRipple(micButton);
+    // settingsButtonRipple.unbounded = true;
+    // micButtonRipple.unbounded = true;
 
     const pokeList = document.getElementById("poke-list") as HTMLDivElement;
     const df = document.createDocumentFragment();
@@ -127,16 +127,16 @@ class Main {
       </div>
       <div class="mdc-dialog__scrim"></div>`;
 
-      const buttons = df.querySelectorAll("button");
-      buttons.forEach((button) => new MDCRipple(button));
+      // const buttons = df.querySelectorAll("button");
+      // buttons.forEach((button) => new MDCRipple(button));
 
       document.body.appendChild(df);
     }
 
-    const dialog = new MDCDialog(
-      document.getElementById("settings") as HTMLDivElement
-    );
-    dialog.open();
+    // const dialog = new MDCDialog(
+    //   document.getElementById("settings") as HTMLDivElement
+    // );
+    // dialog.open();
 
     const daredaModeButton = document.getElementById(
       "dareda-mode"
@@ -315,13 +315,13 @@ class Main {
     speech.interimResults = true;
     speech.continuous = true;
 
-    const dialog = new MDCDialog(
-      document.getElementById("speech") as HTMLDivElement
-    );
-    dialog.listen("MDCDialog:closed", () => speech.stop());
-    dialog.open();
+    // const dialog = new MDCDialog(
+    //   document.getElementById("speech") as HTMLDivElement
+    // );
+    // dialog.listen("MDCDialog:closed", () => speech.stop());
+    // dialog.open();
 
-    speech.addEventListener("end", () => dialog.close());
+    // speech.addEventListener("end", () => dialog.close());
 
     const speechText = document.querySelector(".speech-text") as HTMLDivElement;
     speechText.textContent = "...";
