@@ -6,6 +6,7 @@ import babel from "@rollup/plugin-babel";
 import postcss from "rollup-plugin-postcss";
 import assetsPlugin from "./scripts/build/assets-plugin/index.js";
 import workboxPlugin from "./scripts/build/workbox-plugin/index.js";
+import HTMLPlugin from "./scripts/build/html-plugin/index.js";
 
 export default {
   input: "src/index.tsx",
@@ -28,6 +29,7 @@ export default {
       modules: true,
     }),
 
+    HTMLPlugin(),
     assetsPlugin(),
     workboxPlugin(),
   ],
