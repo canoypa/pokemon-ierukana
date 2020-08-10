@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { minify } from "html-minifier-terser";
 
@@ -12,9 +12,8 @@ const options = {
 };
 
 export default function HTMLPlugin() {
-  readFile(resolve("./src/index.html"), { encoding: "utf8" }, (_err, html) => {
-    writeFile(resolve("./docs/index.html"), minify(html, options), () => {});
-  });
+  const html = readFileSync(resolve("./src/index.html"), { encoding: "utf8" });
+  writeFileSync(resolve("./docs/index.html"), minify(html, options));
 
   return {
     name: "html-plugin",
