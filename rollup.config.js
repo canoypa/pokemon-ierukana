@@ -12,7 +12,7 @@ export default {
   input: "src/index.tsx",
 
   output: {
-    dir: "dist",
+    dir: "docs",
     format: "es",
   },
 
