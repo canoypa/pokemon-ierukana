@@ -1,36 +1,34 @@
 import { resolve, join } from "path";
-import { copyFile, stat, exists, readdir, mkdir, readFile } from "fs";
+import {
+  copyFile,
+  existsSync,
+  statSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+} from "fs";
 
 const copyDir = (src, dest) => {
-  stat(src, (_err, fileStat) => {
-    if (fileStat.isDirectory()) {
-      exists(dest, (exist) => {
-        const next = () => {
-          readdir(src, (_err, fileNames) => {
-            fileNames.forEach((itemName) => {
-              copyDir(join(src, itemName), join(dest, itemName));
-            });
-          });
-        };
+  const exist = existsSync(dest);
+  const isDirectory = statSync(src).isDirectory();
 
-        if (!exist) mkdir(dest, next);
-        else next();
-      });
+  if (isDirectory) {
+    if (!exist) mkdirSync(dest);
+
+    const fileNames = readdirSync(src);
+    fileNames.forEach((itemName) =>
+      copyDir(join(src, itemName), join(dest, itemName))
+    );
+  } else {
+    if (exist) {
+      // 変更がある場合のみコピー
+      const buf1 = readFileSync(src);
+      const buf2 = readFileSync(dest);
+      if (Buffer.compare(buf1, buf2)) copyFile(src, dest, () => {});
     } else {
-      exists(dest, (exist) => {
-        if (exist) {
-          // 変更がある場合のみコピー
-          readFile(src, (_err, buf1) => {
-            readFile(dest, (_err, buf2) => {
-              if (Buffer.compare(buf1, buf2)) copyFile(src, dest, () => {});
-            });
-          });
-        } else {
-          copyFile(src, dest, () => {});
-        }
-      });
+      copyFile(src, dest, () => {});
     }
-  });
+  }
 };
 
 export default function assetsPlugin() {
