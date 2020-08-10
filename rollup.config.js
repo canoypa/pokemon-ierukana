@@ -7,7 +7,6 @@ import postcss from "rollup-plugin-postcss";
 import assetsPlugin from "./scripts/build/assets-plugin/index.js";
 import workboxPlugin from "./scripts/build/workbox-plugin/index.js";
 import HTMLPlugin from "./scripts/build/html-plugin/index.js";
-import cleanPlugin from "./scripts/build/clean-plugin/index.js";
 
 export default {
   input: "src/index.tsx",
@@ -15,11 +14,10 @@ export default {
   output: {
     dir: "docs",
     format: "es",
+    sourcemap: true,
   },
 
   plugins: [
-    cleanPlugin(),
-
     typescript(),
     babel({ extensions: ["js", "ts", "tsx"] }),
 
