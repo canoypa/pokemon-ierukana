@@ -1,5 +1,5 @@
 import { resolve, join } from "path";
-import { copyFile, stat, exists, readdir, mkdir } from "fs";
+import { copyFile, stat, exists, readdir, mkdir, readFile } from "fs";
 
 const copyDir = (src, dest) => {
   stat(src, (_err, fileStat) => {
@@ -17,7 +17,18 @@ const copyDir = (src, dest) => {
         else next();
       });
     } else {
-      copyFile(src, dest, () => {});
+      exists(dest, (exist) => {
+        if (exist) {
+          // 変更がある場合のみコピー
+          readFile(src, (_err, buf1) => {
+            readFile(dest, (_err, buf2) => {
+              if (Buffer.compare(buf1, buf2)) copyFile(src, dest, () => {});
+            });
+          });
+        } else {
+          copyFile(src, dest, () => {});
+        }
+      });
     }
   });
 };
