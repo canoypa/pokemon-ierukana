@@ -1,6 +1,6 @@
-import { h } from "preact";
+import { h, FC } from "preact";
 
-const createIcon = (path: string) => () => (
+const createIcon = (path: string): FC => () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d={path} />
   </svg>
