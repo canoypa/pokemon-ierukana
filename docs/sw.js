@@ -26,16 +26,12 @@ self.addEventListener('message', (event) => {
  */
 self.__precacheManifest = [
   {
-    "url": "index.css",
-    "revision": "77c1075ed300415ccf44d8b633f712e4"
-  },
-  {
     "url": "index.html",
-    "revision": "69ad7e98a76b9e9773e32ef2248c3972"
+    "revision": "204e953f79cc95afeba7be46a90232d0"
   },
   {
     "url": "index.js",
-    "revision": "82bec33c68aef12220df22204a517f81"
+    "revision": "103baba4f10795ae6d1593dcdb1b86be"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
