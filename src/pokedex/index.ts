@@ -1,3 +1,5 @@
+import { flatMap } from "../utils/flat-map";
+
 export const pokedex = [
   { id: 1, name: "フシギダネ", keyword: ["フシギダネ"] },
   { id: 2, name: "フシギソウ", keyword: ["フシギソウ"] },
@@ -898,3 +900,9 @@ export const pokedex = [
   { id: 889, name: "ザマゼンタ", keyword: ["ザマゼンタ"] },
   { id: 890, name: "ムゲンダイナ", keyword: ["ムゲンダイナ"] },
 ];
+
+export const pokeKeywordToId = Object.fromEntries(
+  flatMap(pokedex, ({ id, keyword }) =>
+    keyword.map((k): [string, number] => [k, id])
+  )
+);
