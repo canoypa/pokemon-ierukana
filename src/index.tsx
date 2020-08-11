@@ -1,5 +1,5 @@
 import { pokedex } from "./pokedex";
-import Poke from "./components/poke";
+// import Poke from "./components/poke";
 // import IconButton from "./components/iconButton";
 // import AppHeader from "./components/appHeader";
 // import AppFooter from "./components/appFooter";
@@ -21,7 +21,7 @@ import { App } from "./pages/app/index";
 
 class Main {
   nameToId: Map<string, number> = new Map();
-  idToGetDom: Map<number, Poke> = new Map();
+  idToGetDom: Map<number, any> = new Map();
 
   answered: number[] = [];
 
@@ -63,26 +63,26 @@ class Main {
     const pokeList = document.getElementById("poke-list") as HTMLDivElement;
     const df = document.createDocumentFragment();
     pokedex.forEach((poke) => {
-      const pokeDom = new Poke();
-      pokeDom.setPoke(poke);
+      // const pokeDom = new Poke();
+      // pokeDom.setPoke(poke);
 
-      df.appendChild(pokeDom);
+      // df.appendChild(pokeDom);
 
-      this.idToGetDom.set(poke.id, pokeDom);
+      // this.idToGetDom.set(poke.id, pokeDom);
       poke.keyword.forEach((key) => this.nameToId.set(key, poke.id));
     });
     pokeList.appendChild(df);
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const target = entry.target as Poke;
-          target.intersect();
-          observer.unobserve(target);
-        }
-      });
-    });
-    this.idToGetDom.forEach((poke) => observer.observe(poke));
+    // const observer = new IntersectionObserver((entries, observer) => {
+    //   entries.forEach((entry) => {
+    //     if (entry.isIntersecting) {
+    //       // const target = entry.target as Poke;
+    //       // target.intersect();
+    //       // observer.unobserve(target);
+    //     }
+    //   });
+    // });
+    // this.idToGetDom.forEach((poke) => observer.observe(poke));
 
     const initAnswered = localStorage.getItem("answered");
     if (initAnswered) {
