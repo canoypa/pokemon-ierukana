@@ -1,10 +1,16 @@
-import { h, FC } from "preact";
+import { h, FC, JSX } from "preact";
 import { IconButton } from "../icon-button";
 import { IconMic } from "../icons";
+import { pokeKeywordToId } from "../../pokedex";
 
 export const AnswerArea: FC = () => {
-  const answerInStr = () => {
+  const answerInStr: JSX.GenericEventHandler<HTMLInputElement> = (event) => {
     // Todo
+
+    const keyword = event.currentTarget.value;
+
+    console.log(keyword);
+    console.log(pokeKeywordToId[keyword]);
   };
 
   const startVoiceInput = () => {
