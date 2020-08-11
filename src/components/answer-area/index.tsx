@@ -3,15 +3,14 @@ import { IconButton } from "../icon-button";
 import { IconMic } from "../icons";
 import { pokeKeywordToId } from "../../pokedex";
 import styles from "./styles.scss";
+import { setAnswered } from "../../actions/answered";
 
 export const AnswerArea: FC = () => {
   const answerInStr: JSX.GenericEventHandler<HTMLInputElement> = (event) => {
-    // Todo
-
     const keyword = event.currentTarget.value;
+    const id = pokeKeywordToId[keyword];
 
-    console.log(keyword);
-    console.log(pokeKeywordToId[keyword]);
+    if (id) setAnswered(id);
   };
 
   const startVoiceInput = () => {
