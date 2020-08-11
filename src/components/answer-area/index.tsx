@@ -5,6 +5,10 @@ import { pokeKeywordToId } from "../../pokedex";
 import styles from "./styles.scss";
 import { setAnswered } from "../../actions/answered";
 
+// Web Speech Api
+const { webkitSpeechRecognition, SpeechRecognition } = window;
+const ISpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+
 export const AnswerArea: FC = () => {
   const answerInStr: JSX.GenericEventHandler<HTMLInputElement> = (event) => {
     const keyword = event.currentTarget.value;
@@ -26,11 +30,13 @@ export const AnswerArea: FC = () => {
         aria-label="解答欄"
         onChange={answerInStr}
       />
-      <IconButton
-        icon={IconMic}
-        aria-label="音声入力"
-        onClick={startVoiceInput}
-      />
+      {ISpeechRecognition && (
+        <IconButton
+          icon={IconMic}
+          aria-label="音声入力"
+          onClick={startVoiceInput}
+        />
+      )}
     </div>
   );
 };
