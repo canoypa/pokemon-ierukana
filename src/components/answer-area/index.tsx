@@ -2,6 +2,7 @@ import { h, FC, JSX } from "preact";
 import { IconButton } from "../icon-button";
 import { IconMic } from "../icons";
 import { pokeKeywordToId } from "../../pokedex";
+import styles from "./styles.scss";
 
 export const AnswerArea: FC = () => {
   const answerInStr: JSX.GenericEventHandler<HTMLInputElement> = (event) => {
@@ -18,8 +19,9 @@ export const AnswerArea: FC = () => {
   };
 
   return (
-    <div>
+    <div class={styles.root}>
       <input
+        class={styles.input}
         type="text"
         placeholder="解答欄"
         aria-label="解答欄"

@@ -1,0 +1,25 @@
+.root {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #eeeeee;
+  transition: background-color 0.1s ease-out;
+
+  &:focus-within {
+    background-color: #e0e0e0;
+  }
+}
+
+.input {
+  flex-grow: 1;
+  flex-shrink: 0;
+  width: 0;
+  height: 48px;
+  padding: 4px 24px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 14px;
+}

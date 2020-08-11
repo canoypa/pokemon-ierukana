@@ -6,6 +6,7 @@ import { BannerArea } from "../../components/banner-area";
 import { Provider } from "../../lib/preact-redux";
 import { store } from "../../store";
 import { SettingsDialog } from "../../components/settings";
+import "./styles.scss";
 
 export const App: FC = () => (
   <Provider store={store}>
