@@ -7,6 +7,39 @@ import { setAnswered } from "../../actions/answered";
 import { useState } from "preact/hooks";
 import { classNames } from "../../utils/class-names";
 
+const answerInVoice = (text: string) => {
+  // キーワードを全て取得
+  const matchPokeKeywords = Object.keys(pokeKeywordToId).filter((k) =>
+    text.includes(k)
+  ); // 入力された文字列に部分一致するキーワードを摘出
+
+  // なければ終了
+  if (matchPokeKeywords.length === 0) return;
+
+  // 名前の重複問題を解決 (ギギギアル だけで ギアル, ギギアル, ギギギアル に一致する)
+  const fullMatchPokeKeywords = matchPokeKeywords
+    .filter((k, _i, arr) => {
+      // 部分重複するキーワードを取得
+      const partialMatch = arr.filter((v) => v !== k && v.includes(k));
+
+      // なければ保持
+      if (partialMatch.length === 0) return true;
+
+      let _text = text;
+      // 文字の長い順にソートし、順に入力された文字列から削除
+      partialMatch
+        .sort((a, b) => (a.length < b.length ? 1 : -1))
+        .forEach((v) => (_text = _text.replace(v, "")));
+
+      // まだ一致する場合保持
+      return _text.includes(k) ? true : false;
+    })
+    .map((k) => pokeKeywordToId[k]);
+
+  // id リストを dispatch
+  setAnswered(...fullMatchPokeKeywords);
+};
+
 // Web Speech Api
 const { webkitSpeechRecognition, SpeechRecognition } = window;
 const ISpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
@@ -50,7 +83,7 @@ export const AnswerArea: FC = () => {
 
     setInputValue(text);
 
-    if (result.isFinal) speech.stop();
+    if (result.isFinal) answerInVoice(text);
 
     console.log("==================================================");
     console.log("Rrsult Event");
