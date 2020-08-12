@@ -39,7 +39,6 @@ export const AnswerArea: FC = () => {
   speech.addEventListener("end", () => {
     console.log("end");
 
-    // #とまらない音声認識
     setInputtingVoice(false);
     setInputValue("");
   });
@@ -68,6 +67,7 @@ export const AnswerArea: FC = () => {
   const stopVoiceInput = () => {
     console.log("stop voice input");
 
+    // #とまらない音声認識
     speech.abort();
     speech.stop();
   };
