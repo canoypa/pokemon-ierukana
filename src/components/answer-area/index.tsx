@@ -82,7 +82,7 @@ export const AnswerArea: FC = () => {
         onInput={onInput}
         onChange={answerInStr}
         value={inputValue}
-        disabled={isInputtingVoice}
+        readOnly={isInputtingVoice}
       />
 
       {ISpeechRecognition && (
