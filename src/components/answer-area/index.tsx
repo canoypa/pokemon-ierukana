@@ -22,36 +22,51 @@ export const AnswerArea: FC = () => {
     if (id) setAnswered(id);
   };
 
-  const startVoiceInput = () => {
+  const speech = new ISpeechRecognition();
+  speech.lang = "ja-JP"; // 言語
+  speech.interimResults = true; // 暫定結果を取得可能にする
+  speech.continuous = true; // 認識後も続行する
+
+  speech.addEventListener("start", () => {
+    console.log("start");
+
     setInputtingVoice(true);
+  });
 
-    const speech = new ISpeechRecognition();
+  speech.addEventListener("end", () => {
+    console.log("end");
 
-    speech.lang = "ja-JP"; // 言語
-    speech.interimResults = true; // 暫定結果を取得可能にする
-    speech.continuous = true; // 認識後も続行する
+    // #とまらない音声認識
+    setInputtingVoice(false);
+    setVoiceInputResult("");
+  });
 
-    speech.addEventListener("result", (event: any) => {
-      const result = event.results[event.resultIndex];
-      const alt = result[0];
-      const text = alt.transcript;
+  speech.addEventListener("result", (event: any) => {
+    const result = event.results[event.resultIndex];
+    const alt = result[0];
+    const text = alt.transcript;
 
-      console.log("==================================================");
-      console.log("Rrsult Event");
-      console.log("Event: ", event);
-      console.log("Text: ", text);
-      console.log("isFinal: ", result.isFinal);
-      console.log("==================================================");
+    setVoiceInputResult(text);
 
-      setVoiceInputResult(text);
+    if (result.isFinal) speech.stop();
 
-      if (result.isFinal) {
-        speech.stop();
-        setInputtingVoice(false);
-      }
-    });
+    console.log("==================================================");
+    console.log("Rrsult Event");
+    console.log("Event: ", event);
+    console.log("Text: ", text);
+    console.log("isFinal: ", result.isFinal);
+    console.log("==================================================");
+  });
 
+  const startVoiceInput = () => {
     speech.start();
+  };
+
+  const stopVoiceInput = () => {
+    console.log("stop voice input");
+
+    speech.abort();
+    speech.stop();
   };
 
   const VoiceInput = () => (
@@ -85,7 +100,7 @@ export const AnswerArea: FC = () => {
             className={styles.absolute}
             icon={IconMic}
             aria-label="音声入力"
-            onClick={startVoiceInput}
+            onClick={inputtingVoice ? stopVoiceInput : startVoiceInput}
           />
         </div>
       )}
