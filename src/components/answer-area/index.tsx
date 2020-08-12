@@ -67,9 +67,9 @@ export const AnswerArea: FC = () => {
   const stopVoiceInput = () => {
     console.log("stop voice input");
 
-    // #とまらない音声認識
+    // #とまりはする音声認識 なんで？？？
+    speech.start();
     speech.abort();
-    speech.stop();
   };
 
   return (
