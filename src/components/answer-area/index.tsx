@@ -12,7 +12,7 @@ const { webkitSpeechRecognition, SpeechRecognition } = window;
 const ISpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
 
 export const AnswerArea: FC = () => {
-  const [inputtingVoice, setInputtingVoice] = useState(false);
+  const [isInputtingVoice, setIsInputtingVoice] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const answerInStr: JSX.GenericEventHandler<HTMLInputElement> = (event) => {
@@ -33,13 +33,13 @@ export const AnswerArea: FC = () => {
   speech.addEventListener("start", () => {
     console.log("start");
 
-    setInputtingVoice(true);
+    setIsInputtingVoice(true);
   });
 
   speech.addEventListener("end", () => {
     console.log("end");
 
-    setInputtingVoice(false);
+    setIsInputtingVoice(false);
     setInputValue("");
   });
 
@@ -77,18 +77,18 @@ export const AnswerArea: FC = () => {
       <input
         class={styles.input}
         type="text"
-        placeholder={inputtingVoice ? "認識中..." : "解答欄"}
+        placeholder={isInputtingVoice ? "認識中..." : "解答欄"}
         aria-label="解答欄"
         onInput={onInput}
         onChange={answerInStr}
         value={inputValue}
-        disabled={inputtingVoice}
+        disabled={isInputtingVoice}
       />
 
       {ISpeechRecognition && (
         <div
           className={classNames(styles.speechButtonWrapper, {
-            [styles.inputtingVoice]: inputtingVoice,
+            [styles.inputtingVoice]: isInputtingVoice,
           })}
         >
           <div className={styles.speechButtonRipple}></div>
@@ -96,7 +96,7 @@ export const AnswerArea: FC = () => {
             className={styles.absolute}
             icon={IconMic}
             aria-label="音声入力"
-            onClick={inputtingVoice ? stopVoiceInput : startVoiceInput}
+            onClick={isInputtingVoice ? stopVoiceInput : startVoiceInput}
           />
         </div>
       )}
