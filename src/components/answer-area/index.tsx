@@ -22,6 +22,9 @@ export const AnswerArea: FC = () => {
     if (id) setAnswered(id);
   };
 
+  const onInput: JSX.GenericEventHandler<HTMLInputElement> = (event) =>
+    setInputValue(event.currentTarget.value);
+
   const speech = new ISpeechRecognition();
   speech.lang = "ja-JP"; // 言語
   speech.interimResults = true; // 暫定結果を取得可能にする
@@ -76,6 +79,7 @@ export const AnswerArea: FC = () => {
         type="text"
         placeholder={inputtingVoice ? "認識中..." : "解答欄"}
         aria-label="解答欄"
+        onInput={onInput}
         onChange={answerInStr}
         value={inputValue}
         disabled={inputtingVoice}
