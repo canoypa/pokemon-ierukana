@@ -13,7 +13,7 @@ const ISpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
 
 export const AnswerArea: FC = () => {
   const [inputtingVoice, setInputtingVoice] = useState(false);
-  const [voiceInputResult, setVoiceInputResult] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const answerInStr: JSX.GenericEventHandler<HTMLInputElement> = (event) => {
     const keyword = event.currentTarget.value;
@@ -38,7 +38,7 @@ export const AnswerArea: FC = () => {
 
     // #とまらない音声認識
     setInputtingVoice(false);
-    setVoiceInputResult("");
+    setInputValue("");
   });
 
   speech.addEventListener("result", (event: any) => {
@@ -46,7 +46,7 @@ export const AnswerArea: FC = () => {
     const alt = result[0];
     const text = alt.transcript;
 
-    setVoiceInputResult(text);
+    setInputValue(text);
 
     if (result.isFinal) speech.stop();
 
@@ -69,25 +69,17 @@ export const AnswerArea: FC = () => {
     speech.stop();
   };
 
-  const VoiceInput = () => (
-    <div className={classNames(styles.input, styles.voiceInputText)}>
-      {voiceInputResult || "認識中..."}
-    </div>
-  );
-
-  const Input = () => (
-    <input
-      class={styles.input}
-      type="text"
-      placeholder="解答欄"
-      aria-label="解答欄"
-      onChange={answerInStr}
-    />
-  );
-
   return (
     <div class={styles.root}>
-      {inputtingVoice ? <VoiceInput /> : <Input />}
+      <input
+        class={styles.input}
+        type="text"
+        placeholder={inputtingVoice ? "認識中..." : "解答欄"}
+        aria-label="解答欄"
+        onChange={answerInStr}
+        value={inputValue}
+        disabled={inputtingVoice}
+      />
 
       {ISpeechRecognition && (
         <div
