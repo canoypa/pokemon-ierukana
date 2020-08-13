@@ -8,7 +8,6 @@ import styles from "./styles.scss";
 
 export const SettingsDialog: FC = () => {
   const isOpen = useSelector((store) => store.isSettingsOpen);
-  console.log(isOpen);
 
   const changeGameMode: JSX.GenericEventHandler<HTMLSelectElement> = (
     event
