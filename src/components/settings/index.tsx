@@ -2,6 +2,7 @@ import { h, FC, Fragment, JSX } from "preact";
 import { GameMode } from "../../store/reducers/mode";
 import { useSelector } from "../../lib/preact-redux";
 import { setGameMode } from "../../actions/mode";
+import { resetAnswered } from "../../actions/answered";
 
 export const SettingsDialog: FC = () => {
   const isOpen = useSelector((store) => store.isSettingsOpen);
@@ -19,8 +20,8 @@ export const SettingsDialog: FC = () => {
     }
   };
 
-  const resetAnswered = () => {
-    // Todo
+  const resetAnsweredHandler = () => {
+    resetAnswered();
   };
 
   return (
@@ -48,7 +49,7 @@ export const SettingsDialog: FC = () => {
             <section>
               <label>
                 <div>回答履歴をリセット</div>
-                <button onClick={resetAnswered}>リセットする</button>
+                <button onClick={resetAnsweredHandler}>リセットする</button>
               </label>
             </section>
           </div>

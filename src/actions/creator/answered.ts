@@ -1,4 +1,7 @@
-import { SetAnsweredAction } from "../../store/reducers/answered";
+import {
+  SetAnsweredAction,
+  ResetAnsweredAction,
+} from "../../store/reducers/answered";
 import { ActionCreator } from "redux";
 
 export const setAnsweredActionCreator: ActionCreator<SetAnsweredAction> = (
@@ -6,4 +9,8 @@ export const setAnsweredActionCreator: ActionCreator<SetAnsweredAction> = (
 ) => ({
   type: "SetAnsweredAction",
   data: id,
+});
+
+export const resetAnsweredActionCreator: ActionCreator<ResetAnsweredAction> = () => ({
+  type: "ResetAnsweredAction",
 });

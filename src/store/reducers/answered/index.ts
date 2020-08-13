@@ -9,6 +9,10 @@ export const answered: Reducer<State, Actions> = (state, action) => {
     return new Set(state);
   }
 
+  if (action.type === "ResetAnsweredAction") {
+    return new Set();
+  }
+
   return state;
 };
 
