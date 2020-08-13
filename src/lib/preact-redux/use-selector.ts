@@ -6,7 +6,7 @@ export const useSelector = <S>(selector: (store: Stores) => S) => {
   const store = useContext(StoreContext);
   if (!store) throw new Error("Store not found.");
 
-  const [select, update] = useReducer<unknown, unknown>(
+  const [select, update] = useReducer<S, S>(
     (pre, cur) => (pre !== cur ? cur : pre),
     selector(store.getState())
   );
