@@ -1,13 +1,22 @@
 import { h, FC } from "preact";
+import { useSelector } from "../../lib/preact-redux";
 import { AnswerArea } from "../answer-area";
+import { pokedex } from "../../pokedex";
 import styles from "./styles.scss";
 
-export const Footer: FC = () => (
-  <div class={styles.root}>
-    <div class={styles.data}>
-      {/* <time id="time">nn</time> */}
-      <span>Loading...</span>
+const pokeLen = pokedex.length;
+
+export const Footer: FC = () => {
+  const answeredLen = useSelector((store) => store.answered.size);
+
+  return (
+    <div class={styles.root}>
+      <div class={styles.data}>
+        <span>{answeredLen}</span>
+        <span> / </span>
+        <span>{pokeLen}</span>
+      </div>
+      <AnswerArea />
     </div>
-    <AnswerArea />
-  </div>
-);
+  );
+};
