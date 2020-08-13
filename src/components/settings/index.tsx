@@ -3,6 +3,8 @@ import { GameMode } from "../../store/reducers/mode";
 import { useSelector } from "../../lib/preact-redux";
 import { setGameMode } from "../../actions/mode";
 import { resetAnswered } from "../../actions/answered";
+import { setIsSettingsOpen } from "../../actions/is-settings-open";
+import styles from "./styles.scss";
 
 export const SettingsDialog: FC = () => {
   const isOpen = useSelector((store) => store.isSettingsOpen);
@@ -24,35 +26,39 @@ export const SettingsDialog: FC = () => {
     resetAnswered();
   };
 
+  const closeSettings = () => {
+    setIsSettingsOpen(false);
+  };
+
   return (
     <Fragment>
       {isOpen && (
-        <div>
-          <div>
-            <h2>設定</h2>
-          </div>
-          <div>
-            <section>
-              <label>
-                <div>ゲームモード</div>
-                <select onChange={changeGameMode}>
-                  <option value={GameMode.Normal}>
-                    通常モード (シルエットなし)
-                  </option>
-                  <option value={GameMode.Dareda}>
-                    Dareda モード (シルエットを表示)
-                  </option>
-                </select>
-              </label>
-            </section>
+        <div className={styles.wrapper}>
+          <div className={styles.root}>
+            <div className={styles.body}>
+              <section className={styles.section}>
+                <label>
+                  <div className={styles.label}>ゲームモード</div>
+                  <select onChange={changeGameMode}>
+                    <option value={GameMode.Normal}>
+                      通常モード (シルエットなし)
+                    </option>
+                    <option value={GameMode.Dareda}>
+                      Dareda モード (シルエットを表示)
+                    </option>
+                  </select>
+                </label>
+              </section>
 
-            <section>
-              <label>
-                <div>回答履歴をリセット</div>
-                <button onClick={resetAnsweredHandler}>リセットする</button>
-              </label>
-            </section>
+              <section className={styles.section}>
+                <label>
+                  <div className={styles.label}>回答履歴をリセット</div>
+                  <button onClick={resetAnsweredHandler}>リセットする</button>
+                </label>
+              </section>
+            </div>
           </div>
+          <div className={styles.scrim} onClick={closeSettings} />
         </div>
       )}
     </Fragment>
