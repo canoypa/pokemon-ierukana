@@ -1,6 +1,6 @@
-export type Action<T extends string, S> = {
+export type Action<T extends string, S = undefined> = {
   type: T;
-  data: S;
+  data?: S;
   error?: Error;
   meta?: unknown;
 };
