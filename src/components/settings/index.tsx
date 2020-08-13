@@ -1,13 +1,22 @@
-import { h, FC, Fragment } from "preact";
+import { h, FC, Fragment, JSX } from "preact";
 import { GameMode } from "../../store/reducers/mode";
 import { useSelector } from "../../lib/preact-redux";
+import { setGameMode } from "../../actions/mode";
 
 export const SettingsDialog: FC = () => {
   const isOpen = useSelector((store) => store.isSettingsOpen);
   console.log(isOpen);
 
-  const changeGameMode = () => {
-    // Todo
+  const changeGameMode: JSX.GenericEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
+    // ゲームモードを変更
+    const value = event.currentTarget.value;
+
+    // 変更できるのでチェック
+    if (value === GameMode.Normal || value === GameMode.Dareda) {
+      setGameMode(value);
+    }
   };
 
   const resetAnswered = () => {
