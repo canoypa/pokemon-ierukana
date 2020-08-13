@@ -2,6 +2,7 @@ import { h, FC } from "preact";
 import { useSelector } from "../../lib/preact-redux";
 import styles from "./styles.scss";
 import { useRef, useState, useEffect } from "preact/hooks";
+import { classNames } from "../../utils/class-names";
 
 const ImgBone: FC = () => <div class={styles.imgbone}>？</div>;
 
@@ -13,6 +14,7 @@ export const Poke: FC<Props> = ({ id, name }) => {
   const elm = useRef<HTMLDivElement>();
 
   const isAnswered = useSelector((store) => store.answered.has(id));
+  const isDaredaMode = useSelector((store) => store.mode === "Dareda");
   const [isIntersected, setIntersecting] = useState(false);
 
   useEffect(() => {
@@ -29,9 +31,9 @@ export const Poke: FC<Props> = ({ id, name }) => {
 
   const displayName = isAnswered ? name : "？？？？";
   const displayImg =
-    isIntersected && isAnswered ? (
+    isIntersected && (isDaredaMode || isAnswered) ? (
       <img
-        class={styles.img}
+        class={classNames(styles.img, { [styles.dareda]: isDaredaMode })}
         src={`./assets/images/pokemon/${id}.png`}
         alt={name}
       />
