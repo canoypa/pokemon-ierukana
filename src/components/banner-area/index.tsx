@@ -4,6 +4,7 @@ import { useState, useEffect } from "preact/hooks";
 import { pokedex } from "../../pokedex";
 import { Banner } from "../banner";
 import { getPokeImgURL } from "../../utils/get-poke-img-url";
+import styles from "./styles.scss";
 
 export const BannerArea: FC = () => {
   const answered = useSelector((s) => s.answered);
@@ -40,5 +41,5 @@ export const BannerArea: FC = () => {
     setBanners(new Map([...banners, ...banner]));
   }, [answered]);
 
-  return <div>{[...banners.values()]}</div>;
+  return <div className={styles.root}>{[...banners.values()]}</div>;
 };
