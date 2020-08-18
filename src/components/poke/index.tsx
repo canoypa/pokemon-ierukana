@@ -3,6 +3,7 @@ import { useSelector } from "../../lib/preact-redux";
 import styles from "./styles.scss";
 import { useRef, useState, useEffect } from "preact/hooks";
 import { classNames } from "../../utils/class-names";
+import { getPokeImgURL } from "../../utils/get-poke-img-url";
 
 const ImgBone: FC = () => <div class={styles.imgbone}>？</div>;
 
@@ -34,7 +35,7 @@ export const Poke: FC<Props> = ({ id, name }) => {
     isIntersected && (isDaredaMode || isAnswered) ? (
       <img
         class={classNames(styles.img, { [styles.dareda]: isDaredaMode })}
-        src={`./assets/images/pokemon/${id}.png`}
+        src={getPokeImgURL(id)}
         alt={name}
       />
     ) : (
