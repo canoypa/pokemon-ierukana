@@ -1,10 +1,11 @@
-import { h, FC } from "preact";
+import { h, FC, JSX } from "preact";
 import { useSelector } from "../../lib/preact-redux";
 import { useState } from "preact/hooks";
 
 export const BannerArea: FC = () => {
   const answered = useSelector((s) => s.answered);
 
+  const [banners, setBanners] = useState<JSX.Element[]>([]);
   const [acqLength, setAcqLength] = useState(answered.size);
   const [newAnswered, setNewAnswered] = useState<number[][]>([]);
 
