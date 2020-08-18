@@ -8,12 +8,16 @@ import { getPokeImgURL } from "../../utils/get-poke-img-url";
 export const BannerArea: FC = () => {
   const answered = useSelector((s) => s.answered);
 
-  const [banners, setBanners] = useState<JSX.Element[]>([]);
+  const [banners, setBanners] = useState<Map<number, JSX.Element>>(new Map());
   const [acqLength, setAcqLength] = useState(answered.size);
 
   const createBanner = (label: string, img: string) => (
     <Banner label={label} img={img} />
   );
+
+  const removeBanner = () => {
+    // Banner から animationEnd を受け取り、削除
+  };
 
   // 回答があった場合、対応するバナーを作成して表示
   useEffect(() => {
@@ -25,11 +29,14 @@ export const BannerArea: FC = () => {
     // バナー作成
     const banner = pokedex
       .filter((p) => newAnswered.includes(p.id))
-      .map((p) => createBanner(getPokeImgURL(p.id), p.name));
+      .map((p): [number, JSX.Element] => [
+        p.id,
+        createBanner(getPokeImgURL(p.id), p.name),
+      ]);
 
     // 表示よろ
-    setBanners([...banners, ...banner]);
+    setBanners(new Map([...banners, ...banner]));
   }, [answered]);
 
-  return <div>{...banners}</div>;
+  return <div>{...[...banners.values()]}</div>;
 };
