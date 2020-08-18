@@ -29,7 +29,7 @@ export const BannerArea: FC = () => {
 
     // 表示よろ
     setBanners([...banners, ...banner]);
-  }, [acqLength]);
+  }, [answered]);
 
   return <div>{/* WIP */}</div>;
 };
