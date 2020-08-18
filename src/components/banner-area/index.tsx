@@ -24,7 +24,7 @@ export const BannerArea: FC = () => {
   // 回答があった場合、対応するバナーを作成して表示
   useEffect(() => {
     // 新たに回答された分のid
-    const newAnswered = [...answered].filter((_id, i) => acqLength < i);
+    const newAnswered = [...answered].filter((_id, i) => acqLength <= i);
     // 取得済みのindexを保存
     setAcqLength(answered.size);
 
