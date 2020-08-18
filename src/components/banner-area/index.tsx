@@ -11,13 +11,15 @@ export const BannerArea: FC = () => {
   const [banners, setBanners] = useState<Map<number, JSX.Element>>(new Map());
   const [acqLength, setAcqLength] = useState(answered.size);
 
-  const createBanner = (label: string, img: string) => (
-    <Banner label={label} img={img} />
-  );
-
-  const removeBanner = () => {
+  const removeBanner = (id: number) => {
     // Banner から animationEnd を受け取り、削除
+    banners.delete(id);
+    setBanners(banners);
   };
+
+  const createBanner = (id: number, label: string, img: string) => (
+    <Banner id={id} animeEnd={removeBanner} label={label} img={img} />
+  );
 
   // 回答があった場合、対応するバナーを作成して表示
   useEffect(() => {
@@ -31,7 +33,7 @@ export const BannerArea: FC = () => {
       .filter((p) => newAnswered.includes(p.id))
       .map((p): [number, JSX.Element] => [
         p.id,
-        createBanner(getPokeImgURL(p.id), p.name),
+        createBanner(p.id, getPokeImgURL(p.id), p.name),
       ]);
 
     // 表示よろ
