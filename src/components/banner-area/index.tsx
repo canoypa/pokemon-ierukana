@@ -40,5 +40,5 @@ export const BannerArea: FC = () => {
     setBanners(new Map([...banners, ...banner]));
   }, [answered]);
 
-  return <div>{...[...banners.values()]}</div>;
+  return <div>{[...banners.values()]}</div>;
 };
