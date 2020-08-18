@@ -15,14 +15,19 @@ export const BannerArea: FC = () => {
     <Banner label={label} img={img} />
   );
 
+  // 回答があった場合、対応するバナーを作成して表示
   useEffect(() => {
+    // 新たに回答された分のid
     const newAnswered = [...answered].filter((_id, i) => acqLength < i);
+    // 取得済みのindexを保存
     setAcqLength(answered.size);
 
+    // バナー作成
     const banner = pokedex
       .filter((p) => newAnswered.includes(p.id))
       .map((p) => createBanner(getPokeImgURL(p.id), p.name));
 
+    // 表示よろ
     setBanners([...banners, ...banner]);
   }, [acqLength]);
 
