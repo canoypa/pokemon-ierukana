@@ -31,5 +31,5 @@ export const BannerArea: FC = () => {
     setBanners([...banners, ...banner]);
   }, [answered]);
 
-  return <div>{/* WIP */}</div>;
+  return <div>{...banners}</div>;
 };
