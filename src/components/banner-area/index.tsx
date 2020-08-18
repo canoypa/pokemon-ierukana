@@ -33,7 +33,7 @@ export const BannerArea: FC = () => {
       .filter((p) => newAnswered.includes(p.id))
       .map((p): [number, JSX.Element] => [
         p.id,
-        createBanner(p.id, getPokeImgURL(p.id), p.name),
+        createBanner(p.id, p.name, getPokeImgURL(p.id)),
       ]);
 
     // 表示よろ
