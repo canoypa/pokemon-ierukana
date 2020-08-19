@@ -8,6 +8,7 @@ import styles from "./styles.scss";
 
 export const SettingsDialog: FC = () => {
   const isOpen = useSelector((store) => store.isSettingsOpen);
+  const gameMode = useSelector((store) => store.mode);
 
   const changeGameMode: JSX.GenericEventHandler<HTMLSelectElement> = (
     event
@@ -38,7 +39,7 @@ export const SettingsDialog: FC = () => {
               <section className={styles.section}>
                 <label>
                   <div className={styles.label}>ゲームモード</div>
-                  <select onChange={changeGameMode}>
+                  <select value={gameMode} onChange={changeGameMode}>
                     <option value={GameMode.Normal}>
                       通常モード (シルエットなし)
                     </option>
