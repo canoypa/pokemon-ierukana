@@ -68,14 +68,10 @@ export const AnswerArea: FC = () => {
     ISpeech.continuous = true; // 認識後も続行する
 
     ISpeech.addEventListener("start", () => {
-      console.log("start");
-
       setIsInputtingVoice(true);
     });
 
     ISpeech.addEventListener("end", () => {
-      console.log("end");
-
       setIsInputtingVoice(false);
       setInputValue("");
     });
@@ -88,13 +84,6 @@ export const AnswerArea: FC = () => {
       setInputValue(text);
 
       if (result.isFinal) answerInVoice(text);
-
-      console.log("==================================================");
-      console.log("Rrsult Event");
-      console.log("Event: ", event);
-      console.log("Text: ", text);
-      console.log("isFinal: ", result.isFinal);
-      console.log("==================================================");
     });
 
     return ISpeech;
