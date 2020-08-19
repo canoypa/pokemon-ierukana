@@ -62,6 +62,8 @@ export const AnswerArea: FC = () => {
   };
 
   const speech = useMemo(() => {
+    if (!ISpeechRecognition) return null;
+
     const ISpeech = new ISpeechRecognition();
     ISpeech.lang = "ja-JP"; // 言語
     ISpeech.interimResults = true; // 暫定結果を取得可能にする
@@ -86,8 +88,8 @@ export const AnswerArea: FC = () => {
     return ISpeech;
   }, []);
 
-  const startVoiceInput = () => speech.start();
-  const stopVoiceInput = () => speech.abort();
+  const startVoiceInput = () => speech && speech.start();
+  const stopVoiceInput = () => speech && speech.abort();
 
   return (
     <div class={styles.root}>
