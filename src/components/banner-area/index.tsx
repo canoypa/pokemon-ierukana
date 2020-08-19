@@ -12,14 +12,14 @@ const deleteBanner = (id: number) =>
     data: id,
   } as const);
 
-const addBanner = (data: [number, JSX.Element][]) =>
+const addBannerAction = (data: [number, JSX.Element][]) =>
   ({
     type: "add",
     data,
   } as const);
 
 type SetBannersAction =
-  | ReturnType<typeof addBanner>
+  | ReturnType<typeof addBannerAction>
   | ReturnType<typeof deleteBanner>;
 const bannerReducer: Reducer<Map<number, JSX.Element>, SetBannersAction> = (
   s,
@@ -42,6 +42,8 @@ export const BannerArea: FC = () => {
   const [acqLength, setAcqLength] = useState(answered.size);
 
   // Banner から animationEnd を受け取り、削除
+  const addBanner = (data: [number, h.JSX.Element][]) =>
+    dispatch(addBannerAction(data));
   const removeBanner = (id: number) => dispatch(deleteBanner(id));
 
   const createBanner = (id: number, label: string, img: string) => (
@@ -64,7 +66,7 @@ export const BannerArea: FC = () => {
       ]);
 
     // 表示よろ
-    dispatch(addBanner(banner));
+    addBanner(banner);
   }, [answered]);
 
   return <div className={styles.root}>{[...banners.values()]}</div>;
