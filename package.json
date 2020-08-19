@@ -5,9 +5,7 @@
   "scripts": {
     "watch": "rollup -c -w",
     "start": "http-server ./docs -c-1 -g",
-    "build": "npm run build:rollup & npm run build:workbox",
-    "build:rollup": "rollup -c",
-    "build:workbox": "node ./scripts/workbox/generatesw.js"
+    "build": "rollup -c"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
