@@ -3,8 +3,11 @@
   align-items: center;
   margin: 8px;
   padding: 8px 24px;
+  height: 64px;
+  box-sizing: border-box;
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.8);
+  animation: show 2.9s ease-in-out;
 }
 
 .img {
@@ -15,4 +18,32 @@
 .label {
   margin-left: 16px;
   color: #fff;
+}
+
+@keyframes show {
+  0% {
+    transform: translateX(120%);
+  }
+
+  10.3448276% {
+    transform: translateX(0%);
+  }
+
+  79.3103448% {
+    transform: translateX(0%);
+  }
+
+  89.6551724% {
+    margin: 8px;
+    padding: 8px 24px;
+    height: 64px;
+    transform: translateX(120%);
+  }
+
+  100% {
+    margin: 0;
+    padding: 0 24px;
+    height: 0;
+    transform: translateX(120%);
+  }
 }
