@@ -6,16 +6,15 @@ import { Banner } from "../banner";
 import { getPokeImgURL } from "../../utils/get-poke-img-url";
 import styles from "./styles.scss";
 
-const removeBannerAction = (id: number) =>
-  ({
-    type: "delete",
-    data: id,
-  } as const);
-
 const addBannerAction = (data: [number, JSX.Element][]) =>
   ({
     type: "add",
     data,
+  } as const);
+const removeBannerAction = (id: number) =>
+  ({
+    type: "delete",
+    data: id,
   } as const);
 
 type SetBannersAction =
@@ -42,10 +41,11 @@ export const BannerArea: FC = () => {
   const [acqLength, setAcqLength] = useState(answered.size);
 
   // Banner 操作
-  const addBanner = (data: [number, h.JSX.Element][]) =>
+  const addBanner = (data: [number, JSX.Element][]) =>
     dispatch(addBannerAction(data));
   const removeBanner = (id: number) => dispatch(removeBannerAction(id));
 
+  // Banner を作成
   const createBanner = (id: number, label: string, img: string) => (
     <Banner key={id} id={id} animeEnd={removeBanner} label={label} img={img} />
   );
@@ -54,6 +54,7 @@ export const BannerArea: FC = () => {
   useEffect(() => {
     // 新たに回答された分のid
     const newAnswered = [...answered].filter((_id, i) => acqLength <= i);
+
     // 取得済みのindexを保存
     setAcqLength(answered.size);
 
