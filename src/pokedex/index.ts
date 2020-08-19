@@ -1,6 +1,6 @@
-import { PokeDex } from "./types";
+import { flatMap } from "../utils/flat-map";
 
-const pokedex: PokeDex = [
+export const pokedex = [
   { id: 1, name: "フシギダネ", keyword: ["フシギダネ"] },
   { id: 2, name: "フシギソウ", keyword: ["フシギソウ"] },
   { id: 3, name: "フシギバナ", keyword: ["フシギバナ"] },
@@ -474,7 +474,11 @@ const pokedex: PokeDex = [
   { id: 471, name: "グレイシア", keyword: ["グレイシア"] },
   { id: 472, name: "グライオン", keyword: ["グライオン"] },
   { id: 473, name: "マンムー", keyword: ["マンムー"] },
-  { id: 474, name: "ポリゴンＺ", keyword: ["ポリゴンＺ", "ポリゴンz", "ポリゴンゼット"] },
+  {
+    id: 474,
+    name: "ポリゴンＺ",
+    keyword: ["ポリゴンＺ", "ポリゴンz", "ポリゴンゼット"],
+  },
   { id: 475, name: "エルレイド", keyword: ["エルレイド"] },
   { id: 476, name: "ダイノーズ", keyword: ["ダイノーズ"] },
   { id: 477, name: "ヨノワール", keyword: ["ヨノワール"] },
@@ -775,7 +779,7 @@ const pokedex: PokeDex = [
   {
     id: 772,
     name: "タイプ：ヌル",
-    keyword: ["タイプ：ヌル", "タイプ:ヌル", "タイプヌル"]
+    keyword: ["タイプ：ヌル", "タイプ:ヌル", "タイプヌル"],
   },
   { id: 773, name: "シルヴァディ", keyword: ["シルヴァディ"] },
   { id: 774, name: "メテノ", keyword: ["メテノ"] },
@@ -894,7 +898,14 @@ const pokedex: PokeDex = [
   { id: 887, name: "ドラパルト", keyword: ["ドラパルト"] },
   { id: 888, name: "ザシアン", keyword: ["ザシアン"] },
   { id: 889, name: "ザマゼンタ", keyword: ["ザマゼンタ"] },
-  { id: 890, name: "ムゲンダイナ", keyword: ["ムゲンダイナ"] }
+  { id: 890, name: "ムゲンダイナ", keyword: ["ムゲンダイナ"] },
+  { id: 891, name: "ダクマ", keyword: ["ダクマ"] },
+  { id: 892, name: "ウーラオス", keyword: ["ウーラオス"] },
+  { id: 893, name: "ザルード", keyword: ["ザルード"] },
 ];
 
-export default pokedex;
+export const pokeKeywordToId = Object.fromEntries(
+  flatMap(pokedex, ({ id, keyword }) =>
+    keyword.map((k): [string, number] => [k, id])
+  )
+);

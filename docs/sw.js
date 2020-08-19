@@ -24,18 +24,5 @@ self.addEventListener('message', (event) => {
  * requests for URLs in the manifest.
  * See https://goo.gl/S9QRab
  */
-self.__precacheManifest = [
-  {
-    "url": "index.css",
-    "revision": "77c1075ed300415ccf44d8b633f712e4"
-  },
-  {
-    "url": "index.html",
-    "revision": "69ad7e98a76b9e9773e32ef2248c3972"
-  },
-  {
-    "url": "index.js",
-    "revision": "82bec33c68aef12220df22204a517f81"
-  }
-].concat(self.__precacheManifest || []);
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});

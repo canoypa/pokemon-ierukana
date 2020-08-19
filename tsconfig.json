@@ -1,13 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ESNext",
+
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "lib": ["DOM", "ES2017", "WebWorker"]
+
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "sourceMap": true,
+
+    "typeRoots": ["node_modules/@types", "src/@types"]
   }
 }
