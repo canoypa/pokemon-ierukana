@@ -18,4 +18,17 @@ window.addEventListener("beforeunload", () => {
   localStorage.setItem("answered", JSON.stringify([...state.answered]));
 });
 
+// Service Worker
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("sw.js", { scope: "/pokemon-ierukana/" })
+    .then((reg) =>
+      console.log(
+        "ServiceWorker registration successful with scope: ",
+        reg.scope
+      )
+    )
+    .catch((err) => console.log("ServiceWorker registration failed: ", err));
+}
+
 render(<App />, document.body);
