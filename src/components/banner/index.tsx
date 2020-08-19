@@ -2,14 +2,13 @@ import { h, FC } from "preact";
 import styles from "./styles.scss";
 
 type Props = {
-  id: number;
-  animeEnd: (id: number) => void;
+  animeEnd: () => void;
   label: string;
   img: string;
 };
-export const Banner: FC<Props> = ({ id, animeEnd, label, img }) => {
+export const Banner: FC<Props> = ({ animeEnd, label, img }) => {
   // BannerArea に通知してこれを描画リストから削除
-  const animationEnd = () => animeEnd(id);
+  const animationEnd = () => animeEnd();
 
   return (
     <div className={styles.root} onAnimationEnd={animationEnd}>

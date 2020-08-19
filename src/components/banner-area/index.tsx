@@ -30,8 +30,8 @@ const createBanner = (
   id: number,
   label: string,
   img: string,
-  animeEnd: (id: number) => void
-) => <Banner key={id} id={id} animeEnd={animeEnd} label={label} img={img} />;
+  animeEnd: () => void
+) => <Banner key={id} animeEnd={animeEnd} label={label} img={img} />;
 
 export const BannerArea: FC = () => {
   const answered = useSelector((s) => s.answered);
