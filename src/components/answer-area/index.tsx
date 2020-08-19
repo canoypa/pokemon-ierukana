@@ -82,7 +82,10 @@ export const AnswerArea: FC = () => {
       const result = event.results[event.resultIndex][0].transcript;
       setInputValue(result);
 
-      if (result.isFinal) answerInVoice(result);
+      if (result.isFinal) {
+        setInputValue("");
+        answerInVoice(result);
+      }
     });
 
     return ISpeech;
