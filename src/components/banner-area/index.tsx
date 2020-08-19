@@ -34,6 +34,14 @@ const bannerReducer: Reducer<Map<number, JSX.Element>, SetBannersAction> = (
   }
 };
 
+// Banner を作成
+const createBanner = (
+  id: number,
+  label: string,
+  img: string,
+  animeEnd: (id: number) => void
+) => <Banner key={id} id={id} animeEnd={animeEnd} label={label} img={img} />;
+
 export const BannerArea: FC = () => {
   const answered = useSelector((s) => s.answered);
 
@@ -44,11 +52,6 @@ export const BannerArea: FC = () => {
   const addBanner = (data: [number, JSX.Element][]) =>
     dispatch(addBannerAction(data));
   const removeBanner = (id: number) => dispatch(removeBannerAction(id));
-
-  // Banner を作成
-  const createBanner = (id: number, label: string, img: string) => (
-    <Banner key={id} id={id} animeEnd={removeBanner} label={label} img={img} />
-  );
 
   // 回答があった場合、対応するバナーを作成して表示
   useEffect(() => {
@@ -63,7 +66,7 @@ export const BannerArea: FC = () => {
       .filter((p) => newAnswered.includes(p.id))
       .map((p): [number, JSX.Element] => [
         p.id,
-        createBanner(p.id, p.name, getPokeImgURL(p.id)),
+        createBanner(p.id, p.name, getPokeImgURL(p.id), removeBanner),
       ]);
 
     // 表示よろ
