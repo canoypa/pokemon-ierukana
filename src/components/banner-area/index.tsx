@@ -1,22 +1,48 @@
 import { h, FC, JSX } from "preact";
 import { useSelector } from "../../lib/preact-redux";
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useReducer, Reducer } from "preact/hooks";
 import { pokedex } from "../../pokedex";
 import { Banner } from "../banner";
 import { getPokeImgURL } from "../../utils/get-poke-img-url";
 import styles from "./styles.scss";
 
+const deleteBanner = (id: number) =>
+  ({
+    type: "delete",
+    data: id,
+  } as const);
+
+const addBanner = (data: [number, JSX.Element][]) =>
+  ({
+    type: "add",
+    data,
+  } as const);
+
+type SetBannersAction =
+  | ReturnType<typeof addBanner>
+  | ReturnType<typeof deleteBanner>;
+const bannerReducer: Reducer<Map<number, JSX.Element>, SetBannersAction> = (
+  s,
+  a
+) => {
+  switch (a.type) {
+    case "add":
+      return new Map([...s, ...a.data]);
+
+    case "delete":
+      s.delete(a.data);
+      return new Map(s);
+  }
+};
+
 export const BannerArea: FC = () => {
   const answered = useSelector((s) => s.answered);
 
-  const [banners, setBanners] = useState<Map<number, JSX.Element>>(new Map());
+  const [banners, dispatch] = useReducer(bannerReducer, new Map());
   const [acqLength, setAcqLength] = useState(answered.size);
 
-  const removeBanner = (id: number) => {
-    // Banner から animationEnd を受け取り、削除
-    banners.delete(id);
-    setBanners(banners);
-  };
+  // Banner から animationEnd を受け取り、削除
+  const removeBanner = (id: number) => dispatch(deleteBanner(id));
 
   const createBanner = (id: number, label: string, img: string) => (
     <Banner key={id} id={id} animeEnd={removeBanner} label={label} img={img} />
@@ -38,7 +64,7 @@ export const BannerArea: FC = () => {
       ]);
 
     // 表示よろ
-    setBanners(new Map([...banners, ...banner]));
+    dispatch(addBanner(banner));
   }, [answered]);
 
   return <div className={styles.root}>{[...banners.values()]}</div>;
