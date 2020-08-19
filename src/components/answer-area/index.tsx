@@ -77,13 +77,10 @@ export const AnswerArea: FC = () => {
     });
 
     ISpeech.addEventListener("result", (event: any) => {
-      const result = event.results[event.resultIndex];
-      const alt = result[0];
-      const text = alt.transcript;
+      const result = event.results[event.resultIndex][0].transcript;
+      setInputValue(result);
 
-      setInputValue(text);
-
-      if (result.isFinal) answerInVoice(text);
+      if (result.isFinal) answerInVoice(result);
     });
 
     return ISpeech;
