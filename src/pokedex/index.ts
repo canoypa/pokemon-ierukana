@@ -899,6 +899,9 @@ export const pokedex = [
   { id: 888, name: "ザシアン", keyword: ["ザシアン"] },
   { id: 889, name: "ザマゼンタ", keyword: ["ザマゼンタ"] },
   { id: 890, name: "ムゲンダイナ", keyword: ["ムゲンダイナ"] },
+  { id: 891, name: "ダクマ", keyword: ["ダクマ"] },
+  { id: 892, name: "ウーラオス", keyword: ["ウーラオス"] },
+  { id: 893, name: "ザルード", keyword: ["ザルード"] },
 ];
 
 export const pokeKeywordToId = Object.fromEntries(
