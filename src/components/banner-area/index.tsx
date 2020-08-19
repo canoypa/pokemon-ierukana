@@ -6,7 +6,7 @@ import { Banner } from "../banner";
 import { getPokeImgURL } from "../../utils/get-poke-img-url";
 import styles from "./styles.scss";
 
-const deleteBanner = (id: number) =>
+const removeBannerAction = (id: number) =>
   ({
     type: "delete",
     data: id,
@@ -20,7 +20,7 @@ const addBannerAction = (data: [number, JSX.Element][]) =>
 
 type SetBannersAction =
   | ReturnType<typeof addBannerAction>
-  | ReturnType<typeof deleteBanner>;
+  | ReturnType<typeof removeBannerAction>;
 const bannerReducer: Reducer<Map<number, JSX.Element>, SetBannersAction> = (
   s,
   a
@@ -41,10 +41,10 @@ export const BannerArea: FC = () => {
   const [banners, dispatch] = useReducer(bannerReducer, new Map());
   const [acqLength, setAcqLength] = useState(answered.size);
 
-  // Banner から animationEnd を受け取り、削除
+  // Banner 操作
   const addBanner = (data: [number, h.JSX.Element][]) =>
     dispatch(addBannerAction(data));
-  const removeBanner = (id: number) => dispatch(deleteBanner(id));
+  const removeBanner = (id: number) => dispatch(removeBannerAction(id));
 
   const createBanner = (id: number, label: string, img: string) => (
     <Banner key={id} id={id} animeEnd={removeBanner} label={label} img={img} />
