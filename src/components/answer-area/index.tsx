@@ -100,13 +100,8 @@ export const AnswerArea: FC = () => {
     return ISpeech;
   }, []);
 
-  const startVoiceInput = () => {
-    speech.start();
-  };
-
-  const stopVoiceInput = () => {
-    speech.abort();
-  };
+  const startVoiceInput = () => speech.start();
+  const stopVoiceInput = () => speech.abort();
 
   return (
     <div class={styles.root}>
