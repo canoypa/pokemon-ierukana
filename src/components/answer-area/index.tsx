@@ -48,6 +48,9 @@ export const AnswerArea: FC = () => {
   const [isInputtingVoice, setIsInputtingVoice] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
+  const onInput: JSX.GenericEventHandler<HTMLInputElement> = (event) =>
+    setInputValue(event.currentTarget.value);
+
   const answerInStr: JSX.GenericEventHandler<HTMLInputElement> = (event) => {
     const keyword = event.currentTarget.value;
     const id = pokeKeywordToId[keyword];
@@ -57,9 +60,6 @@ export const AnswerArea: FC = () => {
       setInputValue("");
     }
   };
-
-  const onInput: JSX.GenericEventHandler<HTMLInputElement> = (event) =>
-    setInputValue(event.currentTarget.value);
 
   const speech = useMemo(() => {
     const ISpeech = new ISpeechRecognition();
