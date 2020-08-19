@@ -52,7 +52,10 @@ export const AnswerArea: FC = () => {
     const keyword = event.currentTarget.value;
     const id = pokeKeywordToId[keyword];
 
-    if (id) setAnswered(id);
+    if (id) {
+      setAnswered(id);
+      setInputValue("");
+    }
   };
 
   const onInput: JSX.GenericEventHandler<HTMLInputElement> = (event) =>
