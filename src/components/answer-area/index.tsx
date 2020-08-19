@@ -4,7 +4,7 @@ import { IconMic } from "../icons";
 import { pokeKeywordToId } from "../../pokedex";
 import styles from "./styles.scss";
 import { setAnswered } from "../../actions/answered";
-import { useState } from "preact/hooks";
+import { useState, useMemo } from "preact/hooks";
 import { classNames } from "../../utils/class-names";
 
 const answerInVoice = (text: string) => {
@@ -61,50 +61,50 @@ export const AnswerArea: FC = () => {
   const onInput: JSX.GenericEventHandler<HTMLInputElement> = (event) =>
     setInputValue(event.currentTarget.value);
 
-  const speech = new ISpeechRecognition();
-  speech.lang = "ja-JP"; // 言語
-  speech.interimResults = true; // 暫定結果を取得可能にする
-  speech.continuous = true; // 認識後も続行する
+  const speech = useMemo(() => {
+    const ISpeech = new ISpeechRecognition();
+    ISpeech.lang = "ja-JP"; // 言語
+    ISpeech.interimResults = true; // 暫定結果を取得可能にする
+    ISpeech.continuous = true; // 認識後も続行する
 
-  speech.addEventListener("start", () => {
-    console.log("start");
+    ISpeech.addEventListener("start", () => {
+      console.log("start");
 
-    setIsInputtingVoice(true);
-  });
+      setIsInputtingVoice(true);
+    });
 
-  speech.addEventListener("end", () => {
-    console.log("end");
+    ISpeech.addEventListener("end", () => {
+      console.log("end");
 
-    setIsInputtingVoice(false);
-    setInputValue("");
-  });
+      setIsInputtingVoice(false);
+      setInputValue("");
+    });
 
-  speech.addEventListener("result", (event: any) => {
-    const result = event.results[event.resultIndex];
-    const alt = result[0];
-    const text = alt.transcript;
+    ISpeech.addEventListener("result", (event: any) => {
+      const result = event.results[event.resultIndex];
+      const alt = result[0];
+      const text = alt.transcript;
 
-    setInputValue(text);
+      setInputValue(text);
 
-    if (result.isFinal) answerInVoice(text);
+      if (result.isFinal) answerInVoice(text);
 
-    console.log("==================================================");
-    console.log("Rrsult Event");
-    console.log("Event: ", event);
-    console.log("Text: ", text);
-    console.log("isFinal: ", result.isFinal);
-    console.log("==================================================");
-  });
+      console.log("==================================================");
+      console.log("Rrsult Event");
+      console.log("Event: ", event);
+      console.log("Text: ", text);
+      console.log("isFinal: ", result.isFinal);
+      console.log("==================================================");
+    });
+
+    return ISpeech;
+  }, []);
 
   const startVoiceInput = () => {
     speech.start();
   };
 
   const stopVoiceInput = () => {
-    console.log("stop voice input");
-
-    // #とまりはする音声認識 なんで？？？
-    speech.start();
     speech.abort();
   };
 
