@@ -7,23 +7,15 @@ import { getPokeImgURL } from "../../utils/get-poke-img-url";
 import styles from "./styles.scss";
 
 const addBannerAction = (data: [number, JSX.Element][]) =>
-  ({
-    type: "add",
-    data,
-  } as const);
-const removeBannerAction = (id: number) =>
-  ({
-    type: "delete",
-    data: id,
-  } as const);
+  ({ type: "add", data } as const);
+const removeBannerAction = (data: number) =>
+  ({ type: "delete", data } as const);
 
-type SetBannersAction =
-  | ReturnType<typeof addBannerAction>
-  | ReturnType<typeof removeBannerAction>;
-const bannerReducer: Reducer<Map<number, JSX.Element>, SetBannersAction> = (
-  s,
-  a
-) => {
+type SetBannerAction = ReturnType<
+  typeof addBannerAction | typeof removeBannerAction
+>;
+type BannerReducerType = Reducer<Map<number, JSX.Element>, SetBannerAction>;
+const bannerReducer: BannerReducerType = (s, a) => {
   switch (a.type) {
     case "add":
       return new Map([...s, ...a.data]);
