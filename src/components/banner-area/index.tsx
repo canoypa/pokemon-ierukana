@@ -19,7 +19,7 @@ export const BannerArea: FC = () => {
   };
 
   const createBanner = (id: number, label: string, img: string) => (
-    <Banner id={id} animeEnd={removeBanner} label={label} img={img} />
+    <Banner key={id} id={id} animeEnd={removeBanner} label={label} img={img} />
   );
 
   // 回答があった場合、対応するバナーを作成して表示
