@@ -34,7 +34,9 @@ export const Poke: FC<Props> = ({ id, name }) => {
   const displayImg =
     isIntersected && (isDaredaMode || isAnswered) ? (
       <img
-        class={classNames(styles.img, { [styles.dareda]: isDaredaMode })}
+        class={classNames(styles.img, {
+          [styles.dareda]: !isAnswered && isDaredaMode,
+        })}
         src={getPokeImgURL(id)}
         alt={name}
       />
