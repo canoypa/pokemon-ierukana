@@ -1,6 +1,5 @@
 import { h, render } from "preact";
 import { App } from "./pages/app/index";
-import { store } from "./store";
 import { GameMode } from "./store/reducers/mode";
 
 // 以前の Dareda Mode 用データが有る場合に再保存
