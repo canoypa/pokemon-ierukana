@@ -7,7 +7,7 @@ import { GameMode } from "./store/reducers/mode";
 const oldLSDareda = localStorage.getItem("dareda");
 if (oldLSDareda !== null) {
   localStorage.removeItem("dareda");
-  localStorage.setItem("mode", GameMode.Dareda);
+  localStorage.setItem("mode", oldLSDareda ? GameMode.Dareda : GameMode.Normal);
 }
 
 // ページ離脱前にデータを保存
