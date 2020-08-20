@@ -10,14 +10,6 @@ if (oldLSDareda !== null) {
   localStorage.setItem("mode", oldLSDareda ? GameMode.Dareda : GameMode.Normal);
 }
 
-// ページ離脱前にデータを保存
-window.addEventListener("beforeunload", () => {
-  const state = store.getState();
-
-  localStorage.setItem("mode", state.mode);
-  localStorage.setItem("answered", JSON.stringify([...state.answered]));
-});
-
 // Service Worker
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
