@@ -15,7 +15,7 @@ export const Header: FC = () => {
       <section class={styles.section}>
         <IconButton
           icon={IconSettings}
-          area-label="設定"
+          aria-label="設定"
           onClick={openSettings}
         />
       </section>
