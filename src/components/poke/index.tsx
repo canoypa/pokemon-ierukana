@@ -48,8 +48,9 @@ export const Poke: FC<Props> = ({ id, name }) => {
     <div class={styles.root} ref={elm}>
       <div class={styles.imgarea}>{displayImg}</div>
       <div class={styles.primary}>
-        <div>
-          No: <span>{id}</span>
+        <div className={styles.no}>
+          <span>No: </span>
+          <span>{id}</span>
         </div>
         <div class={styles.name}>{displayName}</div>
       </div>
