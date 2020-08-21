@@ -7,8 +7,8 @@ import { Windowing } from "../windowing";
 export const Main: FC = () => {
   const rowHeight = 96;
   const rowWidth = 256;
-  const rowCount = Math.ceil(pokedex.length / 4);
   const colCount = ~~(window.innerWidth / rowWidth);
+  const rowCount = Math.ceil(pokedex.length / colCount);
 
   const renderPoke = (rowIndex: number) => {
     const fromIndex = rowIndex * colCount;
