@@ -1,7 +1,7 @@
 import { h, FC } from "preact";
 import { useSelector } from "../../lib/preact-redux";
 import styles from "./styles.scss";
-import { useRef, useState, useEffect } from "preact/hooks";
+import { useRef } from "preact/hooks";
 import { classNames } from "../../utils/class-names";
 import { getPokeImgURL } from "../../utils/get-poke-img-url";
 
@@ -16,23 +16,10 @@ export const Poke: FC<Props> = ({ id, name }) => {
 
   const isAnswered = useSelector((store) => store.answered.has(id));
   const isDaredaMode = useSelector((store) => store.mode === "Dareda");
-  const [isIntersected, setIntersecting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIntersecting(true);
-        observer.unobserve(elm.current);
-      }
-    });
-    observer.observe(elm.current);
-
-    return () => observer.unobserve(elm.current);
-  }, []);
 
   const displayName = isAnswered ? name : "？？？？";
   const displayImg =
-    isIntersected && (isDaredaMode || isAnswered) ? (
+    isDaredaMode || isAnswered ? (
       <img
         class={classNames(styles.img, {
           [styles.dareda]: !isAnswered && isDaredaMode,
