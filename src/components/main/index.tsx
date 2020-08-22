@@ -3,12 +3,15 @@ import { pokedex } from "../../pokedex";
 import { Poke } from "../poke";
 import styles from "./styles.scss";
 import { Windowing } from "../windowing";
+import { useEffect, useState } from "preact/hooks";
 
 export const Main: FC = () => {
   const rowHeight = 96;
   const rowWidth = 256;
-  const colCount = ~~(window.innerWidth / rowWidth);
-  const rowCount = Math.ceil(pokedex.length / colCount);
+  const [colCount, setColCount] = useState(~~(window.innerWidth / rowWidth));
+  const [rowCount, setRowCount] = useState(
+    Math.ceil(pokedex.length / colCount)
+  );
 
   const renderPoke = (rowIndex: number) => {
     const fromIndex = rowIndex * colCount;
@@ -24,6 +27,19 @@ export const Main: FC = () => {
       </div>
     );
   };
+
+  const onResize = () => {
+    const newColCount = ~~(window.innerWidth / rowWidth);
+    const newRowCount = Math.ceil(pokedex.length / newColCount);
+
+    setColCount(newColCount);
+    setRowCount(newRowCount);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <div className={styles.root}>
