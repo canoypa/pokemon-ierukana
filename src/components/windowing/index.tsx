@@ -16,8 +16,9 @@ export const Windowing: FC<Props> = ({
 }) => {
   const container = useRef<HTMLDivElement>();
 
-  const [containerHeight] = useState<number>(rowHeight * rowCount);
   const [contents, setContents] = useState<JSX.Element[]>([]);
+
+  const containerHeight = rowHeight * rowCount;
 
   const re = () => {
     const scrollTop = container.current.scrollTop;
