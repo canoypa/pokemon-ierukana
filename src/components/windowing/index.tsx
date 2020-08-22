@@ -50,7 +50,7 @@ export const Windowing: FC<Props> = ({
     setContents(newContents);
   };
 
-  useEffect(() => re(), []);
+  useEffect(() => re(), [rowCount]);
 
   return (
     <div onScroll={re} ref={container} className={styles.root}>
